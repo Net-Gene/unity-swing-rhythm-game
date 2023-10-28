@@ -5,12 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    // Näytä pause-valikon kanvaasi aluksi piilotettuna.
     public GameObject pauseMenuCanvas;
     private bool isPaused = false;
 
     private void Start()
     {
-        // Initially, hide the pause menu canvas.
+        // Aluksi piilota pause-valikon kanvaasi.
         if (pauseMenuCanvas != null)
         {
             pauseMenuCanvas.SetActive(false);
@@ -19,7 +20,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        // Check for the "Escape" key to toggle the pause menu.
+        // Tarkista "Escape"-näppäimen painallus pause-valikon tilan vaihtamiseksi.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
@@ -35,26 +36,25 @@ public class PauseMenu : MonoBehaviour
 
     public void PauseGame()
     {
-        // Show the pause menu canvas and pause the game.
+        // Näytä pause-valikon kanvaasi ja keskeytä peli.
         if (pauseMenuCanvas != null)
         {
             pauseMenuCanvas.SetActive(true);
-            Time.timeScale = 0f; // Pause the game time.
+            Time.timeScale = 0f; // Pysäytä peliaika.
             isPaused = true;
         }
     }
 
     public void ResumeGame()
     {
-        // Hide the pause menu canvas and resume the game.
+        // Piilota pause-valikon kanvaasi ja jatka peliä.
         if (pauseMenuCanvas != null)
         {
             pauseMenuCanvas.SetActive(false);
-            Time.timeScale = 1f; // Resume normal game time.
+            Time.timeScale = 1f; // Jatka normaalia peliaikaa.
             isPaused = false;
         }
     }
-
 
     public void GoToMenu()
     {

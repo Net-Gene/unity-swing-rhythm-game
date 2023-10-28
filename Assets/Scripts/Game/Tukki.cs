@@ -8,19 +8,18 @@ using UnityEngine;
 
 public class Tukki : MonoBehaviour
 {
-    public float initialSpawnIntervalMin = 6f;
-    public float initialSpawnIntervalMax = 5f;
-    public float despawnKorkeus = -10f;
-    public GameObject pelaaja;
-    public GameObject kirves;
-    private float nopeus = 5f;
+    public float initialSpawnIntervalMin = 6f; // Alkuperäinen tukin ilmestymisväli minimiarvo
+    public float initialSpawnIntervalMax = 5f; // Alkuperäinen tukin ilmestymisväli maksimiarvo
+    public float despawnKorkeus = -10f; // Korkeus, jossa tukki poistetaan
+    public GameObject pelaaja; // Pelaajan peliobjekti
+    public GameObject kirves; // Kirveksen peliobjekti
+    private float nopeus = 5f; // Tukin liikkumisnopeus
 
     void Start()
     {
-        pelaaja = GameObject.Find("Pelaaja"); // Pelaaja voidaan paikata myös joen lopussa olevalla hitboksilla
-        kirves = GameObject.Find("Kirves"); // etitään kirves
+        pelaaja = GameObject.Find("Pelaaja"); // Etsi pelaajan peliobjekti
+        kirves = GameObject.Find("Kirves"); // Etsi kirveksen peliobjekti
     }
-
 
     void Update()
     {
@@ -32,13 +31,13 @@ public class Tukki : MonoBehaviour
         {
             if (transform.position.x == pelaaja.transform.position.x)
             {
-                // Pelaaja ei lyönyt tukkia oikeaan aikaan, pelaaja häviää 
+                // Pelaaja ei lyönyt tukkia oikeaan aikaan, pelaaja häviää
                 print("Hävisit");
-                Destroy(gameObject); // Tukki despawnataan, kun se osuu pelaajaan
+                Destroy(gameObject); // Tukki poistetaan, kun se osuu pelaajaan
             }
         }
 
-        // Tarkista, onko tukki liian alhaalla ja despawnataan
+        // Tarkista, onko tukki liian alhaalla ja poistetaan
         if (transform.position.z <= despawnKorkeus)
         {
             Destroy(gameObject);
@@ -50,9 +49,8 @@ public class Tukki : MonoBehaviour
     {
         if (other.CompareTag("Kirves"))
         {
-            Destroy(gameObject); // Tukki despawnaa, kun se osuu Kirvekseen
+            Destroy(gameObject); // Tukki poistetaan, kun se osuu Kirvekseen
         }
     }
-
 }
 

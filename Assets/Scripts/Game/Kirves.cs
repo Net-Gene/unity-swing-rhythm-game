@@ -20,6 +20,7 @@ public class Kirves : MonoBehaviour
         IskeKirveella();
     }
 
+    // Metodi, joka vastaa kaistan vaihtamisesta
     void LiikuKaistaa()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -36,12 +37,14 @@ public class Kirves : MonoBehaviour
         }
     }
 
+    // Metodi, joka vaihtaa kaistaa
     void VaihdaKaistaa(int uusiKaista)
     {
         nykyinenKaista = uusiKaista;
         kaistanSijainti = uusiKaista - 2;
     }
 
+    // Metodi, joka toteuttaa kirveellä iskemisen
     void IskeKirveella()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -61,6 +64,7 @@ public class Kirves : MonoBehaviour
         }
     }
 
+    // Metodi, joka tarkistaa, osuiko kirves tukkiin
     void TarkistaKirveenOsumaTukkiin()
     {
         // Tarkista, onko tukki kirveen korkeudella ja kaistalla

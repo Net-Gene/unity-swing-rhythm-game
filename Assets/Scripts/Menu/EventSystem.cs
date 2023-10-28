@@ -4,24 +4,32 @@ using UnityEngine.UI;
 
 public class ChangeFirstSelected : MonoBehaviour
 {
-    public Button yourButton; // Assign your button in the Inspector
+    // Aseta painikkeesi Inspectorissa
+    public Button yourButton;
 
-    public GameObject newFirstSelectedObject; // Assign the new object in the Inspector
+    // Aseta uusi objekti Inspectorissa
+    public GameObject newFirstSelectedObject;
 
     private EventSystem eventSystem;
 
     private void Start()
     {
+        // Etsi EventSystemin instanssi
         eventSystem = FindObjectOfType<EventSystem>();
+
+        // Lis‰‰ kuuntelija nappulan klikkaukselle
         yourButton.onClick.AddListener(ChangeFirstSelectedObject);
     }
 
+    // Metodi ensimm‰isen valitun objektin vaihtamiseksi
     public void ChangeFirstSelectedObject()
     {
         Debug.Log("ChangeFirstSelectedObject method called.");
 
+        // Tarkista, onko eventSystem olemassa
         if (eventSystem != null)
         {
+            // Vaihda ensimm‰isen valitun peliobjektin arvo uuteen objektiin
             eventSystem.firstSelectedGameObject = newFirstSelectedObject;
         }
         else
@@ -31,5 +39,4 @@ public class ChangeFirstSelected : MonoBehaviour
 
         Debug.Log("ChangeFirstSelectedObject method completed.");
     }
-
 }

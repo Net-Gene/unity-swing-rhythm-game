@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioSource audioSource; // Assign an AudioSource component in the Inspector
-    public AudioClip soundToPlay;  // Assign the audio clip to play in the Inspector
+    public AudioSource audioSource; // Aseta AudioSource-komponentti Inspectorissa
+    public AudioClip soundToPlay;  // Aseta ‰‰nitiedosto soitettavaksi Inspectorissa
 
-    private bool isPaused = false; // A flag to track if the game is paused
+    private bool isPaused = false; // Lippu, joka seuraa, onko peli keskeytetty
 
-    public event Action GameResumed; // Event to trigger when the game is resumed
+    public event Action GameResumed; // Tapahtuma, joka laukaistaan, kun peli jatkuu
 
-    // Start is called before the first frame update
+    // Start kutsutaan ennen ensimm‰ist‰ ruutup‰ivityst‰
     void Start()
     {
         if (audioSource != null && soundToPlay != null)
@@ -21,10 +21,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    // Update kutsutaan kerran jokaisella ruudunp‰ivityksell‰
     void Update()
     {
-        // Check for the "Escape" key to toggle the pause state
+        // Tarkista "Escape" -n‰pp‰in keskeytystilan k‰‰nt‰miseksi
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
@@ -33,19 +33,19 @@ public class AudioManager : MonoBehaviour
 
     void TogglePause()
     {
-        isPaused = !isPaused; // Toggle the pause state
+        isPaused = !isPaused; // K‰‰nn‰ keskeytystila
 
         if (isPaused)
         {
-            Time.timeScale = 0.0f; // Pause the game time
-            audioSource.pitch = 0.5f; // Adjust the pitch when paused
+            Time.timeScale = 0.0f; // Keskeyt‰ peliaika
+            audioSource.pitch = 0.5f; // S‰‰d‰ ‰‰nen korkeutta keskeytett‰ess‰
         }
         else
         {
-            Time.timeScale = 1.0f; // Resume normal game time
-            audioSource.pitch = 1.0f; // Reset pitch to normal
+            Time.timeScale = 1.0f; // Jatka normaalia peliaikaa
+            audioSource.pitch = 1.0f; // Palauta ‰‰nen korkeus normaaliksi
 
-            // Trigger the GameResumed event
+            // Laukaise GameResumed-tapahtuma
             GameResumed?.Invoke();
         }
     }
@@ -56,3 +56,4 @@ public class AudioManager : MonoBehaviour
         audioSource.Play();
     }
 }
+
