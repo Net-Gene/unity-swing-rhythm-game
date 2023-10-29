@@ -32,7 +32,7 @@ public class Tukki : MonoBehaviour
             if (transform.position.x == pelaaja.transform.position.x)
             {
                 // Pelaaja ei lyönyt tukkia oikeaan aikaan, pelaaja häviää
-                print("Hävisit");
+                Debug.Log("You lost");
                 Destroy(gameObject); // Tukki poistetaan, kun se osuu pelaajaan
             }
         }
