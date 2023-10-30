@@ -12,10 +12,14 @@ public class HighScoreTable : MonoBehaviour
 
     private void Start()
     {
-        AlustaPisteTaulukko();
 
         // Lisää nykyiset pisteet listaan
         scores.Add(PlayerPrefs.GetInt("CurrentScore", 0));
+
+        // Sort the scores in descending order
+        scores.Sort((a, b) => b.CompareTo(a));
+
+        AlustaPisteTaulukko();
 
         // Hae enimmäispisteet PlayerPrefs:ista ja näytä ne
         int enimmäispisteet = PlayerPrefs.GetInt("Highscore", 0);
@@ -43,7 +47,7 @@ public class HighScoreTable : MonoBehaviour
             int pisteet = scores[i];
             entryTransform.transform.Find("scoreText").GetComponent<TMPro.TMP_Text>().text = pisteet.ToString();
 
-            string staattinenNimi = "Static Name"; // Aseta tallennettaville pisteille staattinen nimi
+            string staattinenNimi = "AAA"; // Aseta tallennettaville pisteille staattinen nimi
             entryTransform.transform.Find("nameText").GetComponent<TMPro.TMP_Text>().text = staattinenNimi;
         }
     }
