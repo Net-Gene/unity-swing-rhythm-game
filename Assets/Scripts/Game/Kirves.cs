@@ -1,84 +1,144 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+
+
 public class Kirves : MonoBehaviour
 {
-    public float kaistanLeveys = 1.0f; // talla hetkella kaistan leveys on yksi yksikko (muutettava, kun mappi on modelattu)
-    public float iskunKorkeus = 1.0f; // Korkeus, jossa isku tapahtuu
+    // Kaistojen koordinaatit
+    private Vector3 kaistaA = new Vector3(-3f, 0f, 2.5f);
+    private Vector3 kaistaB = new Vector3(0f, 0f, 2.5f);
+    private Vector3 kaistaC = new Vector3(3f, 0f, 2.5f);
 
-    private int nykyinenKaista = 1; // Alkuasetus kaistaan 1
-    private float kaistanSijainti = 0.0f; // Aloitetaan keskimmaisesta kaistasta
-    private float iskunAika = -1.0f; // Negatiivinen arvo tarkoittaa, ettei isku ole aktiivinen
+
+    // Liikkumisnopeus 
+    public float liikkumisNopeus = 5f;
+
+    // Lyönnin animaation aika 
+    public float lyonninAika = 0.4f;
+
+    private Vector3 kohdeSijainti; // Tavoitesijainti liikkumista varten 
+    private bool lyontiKaynnissa = false; // Onko lyönti käynnissä 
+
+
+    void Start()
+    {
+        // Asetetaan keskimmäinen kaista alkukaistaksi
+        AsetaKaista("B");
+    }
+
 
     void Update()
     {
-        LiikuKaistaa();
-        IskeKirveella();
+        if (!lyontiKaynnissa)
+        {
+            LiikuKirvesta();
+            VaihdaKaistaa();
+            LyoKirveella();
+        }
+        // Outo ongelma liikuttaa kirvestä kokoajan Z = 12.55 kohti
+        Vector3 zSijainti = transform.position;
+        zSijainti.z = 2.5f;
+        transform.position = zSijainti;
     }
 
-    // Metodi, joka vastaa kaistan vaihtamisesta
-    void LiikuKaistaa()
+
+    void LiikuKirvesta()
+    {
+        // Liikutetan kirvestä kohti tavoitesijaintia 
+        transform.position = Vector3.MoveTowards(transform.position, kohdeSijainti, liikkumisNopeus * Time.deltaTime);
+    }
+
+
+    void VaihdaKaistaa()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            VaihdaKaistaa(1);
+            AsetaKaista("A");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            VaihdaKaistaa(2);
+            AsetaKaista("B");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            VaihdaKaistaa(3);
+            AsetaKaista("C");
         }
     }
 
-    // Metodi, joka vaihtaa kaistaa
-    void VaihdaKaistaa(int uusiKaista)
+
+    void AsetaKaista(string kaista)
     {
-        nykyinenKaista = uusiKaista;
-        kaistanSijainti = uusiKaista - 2;
+        // Asetetaan kohdesijainti valitulle kaistalle 
+        if (kaista == "A")
+        {
+            kohdeSijainti = kaistaA;
+        }
+        else if (kaista == "B")
+        {
+            kohdeSijainti = kaistaB;
+        }
+        else if (kaista == "C")
+        {
+            kohdeSijainti = kaistaC;
+        }
     }
 
-    // Metodi, joka toteuttaa kirveellä iskemisen
-    void IskeKirveella()
+
+    void LyoKirveella()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (iskunAika < 0)
-            {
-                // Kaynnista isku, jos se ei ole jo kaynnissa
-                iskunAika = Time.time;
-            }
-        }
-
-        if (iskunAika > 0 && Time.time - iskunAika >= 0.1f)
-        {
-            // Tarkista, osuiko kirves tukkiin iskun aikana
-            TarkistaKirveenOsumaTukkiin();
-            iskunAika = -1.0f; // Nollaa iskun aika
+            // Käynnistetään lyönti 
+            StartCoroutine(LyoAnimaatio());
         }
     }
 
-    // Metodi, joka tarkistaa, osuiko kirves tukkiin
-    void TarkistaKirveenOsumaTukkiin()
-    {
-        // Tarkista, onko tukki kirveen korkeudella ja kaistalla
-        Vector3 kirveenSijainti = new Vector3(kaistanSijainti, iskunKorkeus, transform.position.z);
-        Collider[] osumat = Physics.OverlapSphere(kirveenSijainti, 0.5f);
 
-        foreach (Collider osuma in osumat)
+    IEnumerator LyoAnimaatio()
+    {
+        lyontiKaynnissa = true;
+
+
+        // Aloitetaan lyönnin animaatio
+        Quaternion alkuperainenRotaatio = transform.rotation;
+        Vector3 alkuperainenPosition = transform.position;
+
+
+        Quaternion tavoiteRotaatio = Quaternion.Euler(100f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+        Vector3 tavoitePosition = new Vector3(transform.position.x, -0.5f, transform.position.z);
+
+
+        float kulunutAika = 0f;
+         
+        transform.rotation = tavoiteRotaatio;
+        // transform.position = tavoitePosition;
+
+        // Palautetaan kirveen alkuperäinen rotaatio ja sijainti
+        while (kulunutAika < lyonninAika)
         {
-            Tukki tukki = osuma.GetComponent<Tukki>();
-            if (tukki != null)
-            {
-                // Tukki osui kirveeseen, tuhoa tukki
-                Destroy(tukki.gameObject);
-            }
+            kulunutAika += Time.deltaTime;
+
+            float osuus = kulunutAika / lyonninAika;
+            transform.rotation = Quaternion.Slerp(tavoiteRotaatio, alkuperainenRotaatio, osuus);
+            // transform.position = Vector3.Lerp(tavoitePosition, alkuperainenPosition, osuus);
+
+
+            yield return null;
         }
+
+
+        // Palautetaan kirveen alkuperäinen rotaatio ja sijainti 
+        // transform.rotation = alkuperainenRotaatio;
+        // transform.position = alkuperainenPosition;
+
+
+        lyontiKaynnissa = false;
     }
 }
+

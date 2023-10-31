@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43463305, g: 0.4720149, b: 0.5096046, a: 1}
+  m_IndirectSpecularColor: {r: 0.43463287, g: 0.47201443, b: 0.50960404, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1130,7 +1130,7 @@ Transform:
   m_GameObject: {fileID: 717003903}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.42, y: 0.29, z: 15.03}
+  m_LocalPosition: {x: 0, y: 0, z: 2.5}
   m_LocalScale: {x: 0.2, y: 2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1148,8 +1148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306247f6eb1554b4c92f0f1d0507ddf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kaistanLeveys: 1
-  iskunKorkeus: 1
+  liikkumisNopeus: 5
+  lyonninAika: 1.1
 --- !u!1 &737213109 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7551788067462035247, guid: 7fcff3890ee40c34bb2eb03d596980a7, type: 3}
@@ -1562,13 +1562,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893904341}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.14999998, z: 0.05000019}
+  m_LocalRotation: {x: 0.1958646, y: -0, z: -0, w: 0.980631}
+  m_LocalPosition: {x: 0, y: 3.42, z: 0.05000019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1431523133}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 22.59, y: 0, z: 0}
 --- !u!1 &949259313
 GameObject:
   m_ObjectHideFlags: 0
