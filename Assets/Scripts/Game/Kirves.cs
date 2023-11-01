@@ -35,6 +35,11 @@ public class Kirves : MonoBehaviour
 
     void Update()
     {
+        Vector3 zSijainti = transform.position;
+        zSijainti.z = -7f;
+        zSijainti.y = 1.5f;
+        transform.position = zSijainti;
+
         if (!lyontiKaynnissa)
         {
             LiikuKirvesta();
@@ -42,9 +47,7 @@ public class Kirves : MonoBehaviour
             LyoKirveella();
         }
         // Outo ongelma liikuttaa kirvestä kokoajan Z = 12.55 kohti
-        Vector3 zSijainti = transform.position;
-        zSijainti.z = 2.5f;
-        transform.position = zSijainti;
+        
     }
 
 
