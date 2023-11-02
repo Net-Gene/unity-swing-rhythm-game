@@ -53,15 +53,15 @@ public class TukkiSpawner : MonoBehaviour
 
         if (kaista == "A")
         {
-            spawnSijainti = new Vector3(-3f, 0f, 10f); // Aseta sijainti kaistan A mukaan
+            spawnSijainti = new Vector3(-3f, 0.15f, 10f); // Aseta sijainti kaistan A mukaan
         }
         else if (kaista == "B")
         {
-            spawnSijainti = new Vector3(0f, 0f, 10f); // Aseta sijainti kaistan B mukaan
+            spawnSijainti = new Vector3(0f, 0.15f, 10f); // Aseta sijainti kaistan B mukaan
         }
         else if (kaista == "C")
         {
-            spawnSijainti = new Vector3(3f, 0f, 10f); // Aseta sijainti kaistan C mukaan
+            spawnSijainti = new Vector3(3f, 0.15f, 10f); // Aseta sijainti kaistan C mukaan
         }
 
         return spawnSijainti; // Palauta laskettu sijainti

@@ -121,5 +121,7 @@ MonoBehaviour:
   initialSpawnIntervalMin: 6
   initialSpawnIntervalMax: 5
   despawnKorkeus: -10
-  kaista: 0
   pelaaja: {fileID: 0}
+  kirves: {fileID: 0}
+  tera: {fileID: 0}
+  tuhoetaisyys: 1

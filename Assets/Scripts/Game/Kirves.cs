@@ -17,7 +17,7 @@ public class Kirves : MonoBehaviour
 
 
     // Liikkumisnopeus 
-    public float liikkumisNopeus = 1f;
+    public float liikkumisNopeus = 15f;
 
     // Ly?nnin animaation aika 
     public float lyonninAika = 0.4f;
@@ -28,7 +28,7 @@ public class Kirves : MonoBehaviour
 
     void Start()
     {
-        // Asetetaan keskimm?inen kaista alkukaistaksi
+        // Asetetaan keskimmainen kaista alkukaistaksi
         AsetaKaista("B");
     }
 
@@ -91,7 +91,7 @@ public class Kirves : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // K?ynnistet??n ly?nti 
+            // Kaynnistetaan lyonti 
             StartCoroutine(LyoAnimaatio());
         }
     }
@@ -102,19 +102,19 @@ public class Kirves : MonoBehaviour
         lyontiKaynnissa = true;
 
 
-        // Aloitetaan ly?nnin animaatio
+        // Aloitetaan lyonnin animaatio
         Quaternion alkuperainenRotaatio = transform.rotation;
         Vector3 alkuperainenPosition = transform.position;
 
 
         Quaternion tavoiteRotaatio = Quaternion.Euler(100f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
-        Vector3 tavoitePosition = new Vector3(transform.position.x, -0.5f, transform.position.z);
+        Vector3 tavoitePosition = new Vector3(transform.position.x, 1, transform.position.z);
 
 
         float kulunutAika = 0f;
          
         transform.rotation = tavoiteRotaatio;
-        // transform.position = tavoitePosition;
+        transform.position = tavoitePosition;
 
         // Palautetaan kirveen alkuper?inen rotaatio ja sijainti
         while (kulunutAika < lyonninAika)
@@ -123,7 +123,7 @@ public class Kirves : MonoBehaviour
 
             float osuus = kulunutAika / lyonninAika;
             transform.rotation = Quaternion.Slerp(tavoiteRotaatio, alkuperainenRotaatio, osuus);
-            // transform.position = Vector3.Lerp(tavoitePosition, alkuperainenPosition, osuus);
+            transform.position = Vector3.Lerp(tavoitePosition, alkuperainenPosition, osuus);
 
 
             yield return null;
