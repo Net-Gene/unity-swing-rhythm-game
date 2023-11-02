@@ -7,18 +7,18 @@ using UnityEngine.UI;
 
 public class OptionsMenu : MonoBehaviour
 {
-    public AudioMixer audioMixer;  // ƒ‰nisekoitin, joka hallitsee ‰‰nenvoimakkuutta
+    public AudioMixer audioMixer;  // ??nisekoitin, joka hallitsee ??nenvoimakkuutta
 
     public TMP_Dropdown resolutionDropdowns;  // Resoluution valintapudotusvalikko
 
-    Resolution[] resolutions;  // Taulukko, joka sis‰lt‰‰ eri resoluutiot
+    Resolution[] resolutions;  // Taulukko, joka sis?lt?? eri resoluutiot
 
     private void Start()
     {
         // Haetaan laitteen tukemat resoluutiot
         resolutions = Screen.resolutions;
 
-        // Tyhjennet‰‰n resoluution valintapudotusvalikko
+        // Tyhjennet??n resoluution valintapudotusvalikko
         resolutionDropdowns.ClearOptions();
 
         // Luodaan lista resoluutiovaihtoehdoista
@@ -32,7 +32,7 @@ public class OptionsMenu : MonoBehaviour
             string option = resolutions[i].width + "x" + resolutions[i].height;
             options.Add(option);
 
-            // Tarkistetaan, onko t‰m‰ resoluutio sama kuin nykyinen n‰ytˆn resoluutio
+            // Tarkistetaan, onko t?m? resoluutio sama kuin nykyinen n?yt?n resoluutio
             if (resolutions[i].width == Screen.currentResolution.width &&
                 resolutions[i].height == Screen.currentResolution.height)
             {
@@ -40,13 +40,13 @@ public class OptionsMenu : MonoBehaviour
             }
         }
 
-        // Lis‰t‰‰n resoluution vaihtoehdot valintapudotusvalikkoon
+        // Lis?t??n resoluution vaihtoehdot valintapudotusvalikkoon
         resolutionDropdowns.AddOptions(options);
 
         // Asetetaan valittu arvo valintapudotusvalikkoon nykyisen resoluution perusteella
         resolutionDropdowns.value = currentResolutionIndex;
 
-        // P‰ivitet‰‰n n‰ytetty valinta
+        // P?ivitet??n n?ytetty valinta
         resolutionDropdowns.RefreshShownValue();
     }
 
@@ -59,7 +59,7 @@ public class OptionsMenu : MonoBehaviour
 
     public void SetVolume(float volume)
     {
-        // Asetetaan ‰‰nenvoimakkuus ‰‰nisekoittimessa
+        // Asetetaan ??nenvoimakkuus ??nisekoittimessa
         audioMixer.SetFloat("volume", volume);
     }
 
@@ -71,7 +71,7 @@ public class OptionsMenu : MonoBehaviour
 
     public void SetFullscreen(bool isFullscreen)
     {
-        // Asetetaan koko n‰ytˆn tila
+        // Asetetaan koko n?yt?n tila
         Screen.fullScreen = isFullscreen;
     }
 }

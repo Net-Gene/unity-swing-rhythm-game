@@ -11,49 +11,43 @@ using UnityEngine;
 public class Kirves : MonoBehaviour
 {
     // Kaistojen koordinaatit
-    private Vector3 kaistaA = new Vector3(-3f, 0f, 2.5f);
-    private Vector3 kaistaB = new Vector3(0f, 0f, 2.5f);
-    private Vector3 kaistaC = new Vector3(3f, 0f, 2.5f);
+    private Vector3 kaistaA = new Vector3(-3f, 2f, -7.55f);
+    private Vector3 kaistaB = new Vector3(0f, 2f, -7.55f);
+    private Vector3 kaistaC = new Vector3(3f, 2f, -7.55f);
 
 
     // Liikkumisnopeus 
-    public float liikkumisNopeus = 5f;
+    public float liikkumisNopeus = 1f;
 
-    // Lyönnin animaation aika 
+    // Ly?nnin animaation aika 
     public float lyonninAika = 0.4f;
 
     private Vector3 kohdeSijainti; // Tavoitesijainti liikkumista varten 
-    private bool lyontiKaynnissa = false; // Onko lyönti käynnissä 
+    private bool lyontiKaynnissa = false; // Onko ly?nti k?ynniss? 
 
 
     void Start()
     {
-        // Asetetaan keskimmäinen kaista alkukaistaksi
+        // Asetetaan keskimm?inen kaista alkukaistaksi
         AsetaKaista("B");
     }
 
 
     void Update()
     {
-        Vector3 zSijainti = transform.position;
-        zSijainti.z = -7f;
-        zSijainti.y = 1.5f;
-        transform.position = zSijainti;
-
         if (!lyontiKaynnissa)
         {
             LiikuKirvesta();
             VaihdaKaistaa();
             LyoKirveella();
         }
-        // Outo ongelma liikuttaa kirvestä kokoajan Z = 12.55 kohti
         
     }
 
 
     void LiikuKirvesta()
     {
-        // Liikutetan kirvestä kohti tavoitesijaintia 
+        // Liikutetan kirvest? kohti tavoitesijaintia 
         transform.position = Vector3.MoveTowards(transform.position, kohdeSijainti, liikkumisNopeus * Time.deltaTime);
     }
 
@@ -97,7 +91,7 @@ public class Kirves : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // Käynnistetään lyönti 
+            // K?ynnistet??n ly?nti 
             StartCoroutine(LyoAnimaatio());
         }
     }
@@ -108,7 +102,7 @@ public class Kirves : MonoBehaviour
         lyontiKaynnissa = true;
 
 
-        // Aloitetaan lyönnin animaatio
+        // Aloitetaan ly?nnin animaatio
         Quaternion alkuperainenRotaatio = transform.rotation;
         Vector3 alkuperainenPosition = transform.position;
 
@@ -122,7 +116,7 @@ public class Kirves : MonoBehaviour
         transform.rotation = tavoiteRotaatio;
         // transform.position = tavoitePosition;
 
-        // Palautetaan kirveen alkuperäinen rotaatio ja sijainti
+        // Palautetaan kirveen alkuper?inen rotaatio ja sijainti
         while (kulunutAika < lyonninAika)
         {
             kulunutAika += Time.deltaTime;
@@ -136,7 +130,7 @@ public class Kirves : MonoBehaviour
         }
 
 
-        // Palautetaan kirveen alkuperäinen rotaatio ja sijainti 
+        // Palautetaan kirveen alkuper?inen rotaatio ja sijainti 
         // transform.rotation = alkuperainenRotaatio;
         // transform.position = alkuperainenPosition;
 

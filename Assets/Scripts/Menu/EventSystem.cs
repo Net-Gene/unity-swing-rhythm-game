@@ -17,11 +17,11 @@ public class ChangeFirstSelected : MonoBehaviour
         // Etsi EventSystemin instanssi
         eventSystem = FindObjectOfType<EventSystem>();
 
-        // Lis‰‰ kuuntelija nappulan klikkaukselle
+        // Lis?? kuuntelija nappulan klikkaukselle
         yourButton.onClick.AddListener(ChangeFirstSelectedObject);
     }
 
-    // Metodi ensimm‰isen valitun objektin vaihtamiseksi
+    // Metodi ensimm?isen valitun objektin vaihtamiseksi
     public void ChangeFirstSelectedObject()
     {
         Debug.Log("ChangeFirstSelectedObject method called.");
@@ -29,8 +29,12 @@ public class ChangeFirstSelected : MonoBehaviour
         // Tarkista, onko eventSystem olemassa
         if (eventSystem != null)
         {
-            // Vaihda ensimm‰isen valitun peliobjektin arvo uuteen objektiin
+            // Vaihda ensimm?isen valitun peliobjektin arvo uuteen objektiin
             eventSystem.firstSelectedGameObject = newFirstSelectedObject;
+            eventSystem.SetSelectedGameObject(newFirstSelectedObject);
+           newFirstSelectedObject.GetComponent<Button>().onClick.AddListener(ChangeFirstSelectedObject);
+
+
         }
         else
         {
