@@ -19,11 +19,11 @@ public class Kirves : MonoBehaviour
     // Liikkumisnopeus 
     public float liikkumisNopeus = 15f;
 
-    // Ly?nnin animaation aika 
+    // Lyannin animaation aika 
     public float lyonninAika = 0.4f;
 
     private Vector3 kohdeSijainti; // Tavoitesijainti liikkumista varten 
-    private bool lyontiKaynnissa = false; // Onko ly?nti k?ynniss? 
+    private bool lyontiKaynnissa = false; // Onko lyanti kaynnissa 
 
 
     void Start()
@@ -47,7 +47,7 @@ public class Kirves : MonoBehaviour
 
     void LiikuKirvesta()
     {
-        // Liikutetan kirvest? kohti tavoitesijaintia 
+        // Liikutetan kirvesta kohti tavoitesijaintia 
         transform.position = Vector3.MoveTowards(transform.position, kohdeSijainti, liikkumisNopeus * Time.deltaTime);
     }
 
@@ -116,7 +116,7 @@ public class Kirves : MonoBehaviour
         transform.rotation = tavoiteRotaatio;
         transform.position = tavoitePosition;
 
-        // Palautetaan kirveen alkuper?inen rotaatio ja sijainti
+        // Palautetaan kirveen alkuperainen rotaatio ja sijainti
         while (kulunutAika < lyonninAika)
         {
             kulunutAika += Time.deltaTime;
@@ -130,7 +130,7 @@ public class Kirves : MonoBehaviour
         }
 
 
-        // Palautetaan kirveen alkuper?inen rotaatio ja sijainti 
+        // Palautetaan kirveen alkuperainen rotaatio ja sijainti 
         // transform.rotation = alkuperainenRotaatio;
         // transform.position = alkuperainenPosition;
 

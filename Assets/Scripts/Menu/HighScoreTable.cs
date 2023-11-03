@@ -8,12 +8,12 @@ public class HighScoreTable : MonoBehaviour
     public GameObject entryContainer; // Aseta Inspectorissa
     public GameObject entryTemplate; // Aseta Inspectorissa
     public TMPro.TMP_Text highScoreText; // Aseta Inspectorissa
-    public List<int> scores = new List<int>(); // S?ilyt? useita pisteit?
+    public List<int> scores = new List<int>(); // Sailyta useita pisteita
 
     private void Start()
     {
 
-        // Lis?? nykyiset pisteet listaan
+        // Lisaa nykyiset pisteet listaan
         scores.Add(PlayerPrefs.GetInt("CurrentScore", 0));
 
         // Sort the scores in descending order
@@ -21,7 +21,7 @@ public class HighScoreTable : MonoBehaviour
 
         AlustaPisteTaulukko();
 
-        // Hae enimm?ispisteet PlayerPrefs:ista ja n?yt? ne
+        // Hae enimmaispisteet PlayerPrefs:ista ja nayta ne
         int enimmaispisteet = PlayerPrefs.GetInt("Highscore", 0);
         highScoreText.text = enimmaispisteet.ToString();
     }
@@ -43,7 +43,7 @@ public class HighScoreTable : MonoBehaviour
             string sijoitusTeksti = HaeSijoitusTeksti(sijoitus);
             entryTransform.transform.Find("posText").GetComponent<TMPro.TMP_Text>().text = sijoitusTeksti;
 
-            // N?yt? jokainen piste
+            // Nayta jokainen piste
             int pisteet = scores[i];
             entryTransform.transform.Find("scoreText").GetComponent<TMPro.TMP_Text>().text = pisteet.ToString();
 
