@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 458040408599442552}
   - component: {fileID: 5917196706181127265}
   - component: {fileID: 7369098049447614694}
-  - component: {fileID: 2467389387896358689}
+  - component: {fileID: -1409430440524049368}
   m_Layer: 0
   m_Name: Tukki
   m_TagString: Untagged
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2467389387896358689
+--- !u!114 &-1409430440524049368
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,7 +121,8 @@ MonoBehaviour:
   initialSpawnIntervalMin: 6
   initialSpawnIntervalMax: 5
   despawnKorkeus: -10
-  pelaaja: {fileID: 0}
-  kirves: {fileID: 0}
-  tera: {fileID: 0}
+  pelaaja: {fileID: 991089312531942397, guid: 6ccebd061d795f04e8a99e1b2f3fcc3a, type: 3}
+  kirves: {fileID: 8439079827239953726, guid: 8dbc1f6d171a1a2458ee417dfc995b80, type: 3}
+  tera: {fileID: 7065198539246935867, guid: e008f1d2de728d043a17954845068102, type: 3}
   tuhoetaisyys: 1
+  nykyinenScore: {fileID: 0}

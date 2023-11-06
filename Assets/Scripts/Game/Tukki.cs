@@ -1,75 +1,88 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-
 
 public class Tukki : MonoBehaviour
 {
-    
-    public float initialSpawnIntervalMin = 6f; // Alkuper‰inen tukin ilmestymisv‰li minimiarvo
-    public float initialSpawnIntervalMax = 5f; // Alkuper‰inen tukin ilmestymisv‰li maksimiarvo
-    public float despawnKorkeus = -10f; // Korkeus, jossa tukki poistetaan
-    public GameObject pelaaja; // Pelaajan peliobjekti
-    public GameObject kirves; // Kirveksen peliobjekti
-    private float nopeus = 5f; // Tukin liikkumisnopeus
+    // Alkuper‰inen tukin ilmestymisv‰li minimi ja maksimi
+    public float initialSpawnIntervalMin = 6f;
+    public float initialSpawnIntervalMax = 5f;
 
-    public Transform tera; // Asetaan "Tera" peliobjektiinsa t‰h‰n
-    public float tuhoetaisyys = 1.0f; // Asetetaan tuhoet‰isyys
+    // Korkeus, jossa tukki poistetaan
+    public float despawnKorkeus = -10f;
 
-    public NykyinenScore nykyinenScore; // asetetaan nykyinen score
-    
+    // Pelaajan ja kirveen peliobjektit
+    public GameObject pelaaja;
+    public GameObject kirves;
 
-    void Start()
+    // Tukin liikkumisnopeus
+    private float nopeus = 5f;
+
+    // Tera-peliobjekti ja tuhoet‰isyys
+    public Transform tera;
+    public float tuhoetaisyys = 1.0f;
+
+    // Lista pisteille
+    private List<ScoreEntry> scores = new List<ScoreEntry>();
+
+    // Viittaus HighScoreTable-skriptiin
+    public HighScoreTable highScoreTable;
+
+    // Luokka pisteiden ja pelaajan nimen tallentamiseksi
+    [System.Serializable]
+    public class ScoreEntry
     {
-        pelaaja = GameObject.Find("Pelaaja"); // Etsit‰‰n pelaajan peliobjekti
-        kirves = GameObject.Find("Kirves"); // Etsit‰‰n kirveksen peliobjekti
-        nykyinenScore = GameObject.FindObjectOfType<NykyinenScore>();
+        public int score;    // Pisteet
+        public string name;  // Nimi
     }
 
-    void Update()
+    private void Start()
     {
-        
-        // Liikutetaan objektia eteenp‰in
-        transform.Translate(Vector3.back * nopeus * Time.deltaTime);
-        
+        // Etsit‰‰n pelaajan ja kirveen peliobjektit
+        pelaaja = GameObject.Find("Pelaaja");
+        kirves = GameObject.Find("Kirves");
 
-        // Lasketaan et‰isyys tukin ja kirveen ter‰n v‰lill‰ 
+        // Etsit‰‰n HighScoreTable-skripti
+        highScoreTable = GameObject.FindObjectOfType<HighScoreTable>();
+    }
+
+    private void Update()
+    {
+        // Liikutetaan objektia taaksep‰in nopeuden verran
+        transform.Translate(Vector3.back * nopeus * Time.deltaTime);
+
+        // Lasketaan et‰isyys tukin ja ter‰n v‰lill‰
         float etaisyys = Vector3.Distance(transform.position, tera.position);
-        
-        // Tarkistetaan, onko et‰isyys alle tuhoet‰isyyden y- ja z-akseleilla 
+
+        // Tarkistetaan, onko et‰isyys alle tuhoet‰isyyden ja tarkistetaan y-akseli
         if (etaisyys < tuhoetaisyys && Mathf.Abs(transform.position.y - tera.position.y) < 1.0f)
         {
-            // Tukki on tarpeeksi l‰hell‰ "Tera", tuhotaan se 
+            // Tukki tuhoutuu
             Destroy(gameObject);
-            nykyinenScore.LisaaPisteita(10f);
-        }
-        
 
-        // Jos tukki p‰‰see luppuun, pelaaja h‰vi‰‰
+            // Lasketaan pisteet pelilogiikan perusteella
+            int score = 10;
+
+            // Lis‰t‰‰n pisteet listaan yhdess‰ pelaajan nimen kanssa
+            scores.Add(new ScoreEntry { score = score, name = PlayerPrefs.GetString("Name") });
+
+            // Tulostetaan pisteet konsoliin
+            Debug.Log("Pisteet: " + score);
+        }
+
+        // Jos tukki saavuttaa m‰‰ritetyn korkeuden, peli p‰‰ttyy
         if (transform.position.z <= despawnKorkeus)
         {
+            // Tukki tuhoutuu
             Destroy(gameObject);
+
+            // Tulostetaan peli p‰‰ttyneeksi
             Debug.Log("Game Over");
+
+            // Siirryt‰‰n seuraavaan pelisceneen
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
-
     }
-
-    // Vanha ep‰toiminnollinen kirveeseen osunta script
-    /*
-    // Lis‰t‰‰n tukille mahdollisuus tarkistaa osuma Kirvekseen
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Kirves"))
-        {
-            Destroy(gameObject); // Tukki poistetaan, kun se osuu Kirvekseen
-        }
-    }
-    */
 }
-
