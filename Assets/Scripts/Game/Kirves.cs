@@ -25,6 +25,7 @@ public class Kirves : MonoBehaviour
     private Vector3 kohdeSijainti; // Tavoitesijainti liikkumista varten 
     private bool lyontiKaynnissa = false; // Onko lyanti kaynnissa 
 
+    // private string vastaanotettuBinary = GetBinaryInputFromESP32();
 
     void Start()
     {

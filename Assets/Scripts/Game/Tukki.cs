@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Tukki : MonoBehaviour
@@ -49,11 +50,12 @@ public class Tukki : MonoBehaviour
         }
         
 
-        // Tarkistetaan, onko tukki liian alhaalla ja poistetaan
+        // Jos tukki p‰‰see luppuun, pelaaja h‰vi‰‰
         if (transform.position.z <= despawnKorkeus)
         {
             Destroy(gameObject);
-            Debug.Log("Gmae Over");
+            Debug.Log("Game Over");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
 
     }
