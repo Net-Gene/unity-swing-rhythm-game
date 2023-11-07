@@ -11,16 +11,16 @@ using UnityEngine;
 public class Kirves : MonoBehaviour
 {
     // Kaistojen koordinaatit
-    private Vector3 kaistaA = new Vector3(-3f, 2f, -7.55f);
-    private Vector3 kaistaB = new Vector3(0f, 2f, -7.55f);
-    private Vector3 kaistaC = new Vector3(3f, 2f, -7.55f);
+    private Vector3 kaistaA = new Vector3(-3f, 1.1f, -7.55f);
+    private Vector3 kaistaB = new Vector3(0f, 1.1f, -7.55f);
+    private Vector3 kaistaC = new Vector3(3f, 1.1f, -7.55f);
 
 
     // Liikkumisnopeus 
     public float liikkumisNopeus = 15f;
 
     // Lyannin animaation aika 
-    public float lyonninAika = 0.4f;
+    public float lyonninAika = 1.1f;
 
     private Vector3 kohdeSijainti; // Tavoitesijainti liikkumista varten 
     private bool lyontiKaynnissa = false; // Onko lyanti kaynnissa 
@@ -108,8 +108,8 @@ public class Kirves : MonoBehaviour
         Vector3 alkuperainenPosition = transform.position;
 
 
-        Quaternion tavoiteRotaatio = Quaternion.Euler(100f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
-        Vector3 tavoitePosition = new Vector3(transform.position.x, 1, transform.position.z);
+        Quaternion tavoiteRotaatio = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+        Vector3 tavoitePosition = new Vector3(transform.position.x, 0.5f, transform.position.z);
 
 
         float kulunutAika = 0f;

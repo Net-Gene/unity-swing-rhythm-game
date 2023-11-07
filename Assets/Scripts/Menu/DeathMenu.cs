@@ -20,7 +20,7 @@ public class DeathMenu : MonoBehaviour
     public void MainMenu()
     {
         // Ladataan MainMenu-scenarion
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
     }
 
     // Suljetaan peli
