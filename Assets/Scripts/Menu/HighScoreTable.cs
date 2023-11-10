@@ -86,16 +86,16 @@ public class HighScoreTable : MonoBehaviour
         // Luo uusi pistemäärämerkintä
         ScoreEntry newEntry = new ScoreEntry { name = playerName, score = score };
 
-        // Lisää uusi merkintä pistetaulukkoon
+        // Add the new entry to the scores list
         scores.Add(newEntry);
 
-        // Järjestä pistemäärät pitääksesi järjestyksen
+        // Sort the scores in descending order
         scores.Sort((a, b) => b.score.CompareTo(a.score));
 
-        // Valinnaisesti voit päivittää käyttöliittymää pistetaulukon muutosten mukaisesti
+        // Optionally update the UI based on the changes in the scores list
         AlustaPisteTaulukko();
 
-        // Tallenna pistetaulukko
+        // Save the updated scores
         SaveHighScores();
     }
 }

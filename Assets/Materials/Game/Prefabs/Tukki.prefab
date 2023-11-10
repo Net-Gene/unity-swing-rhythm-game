@@ -122,7 +122,8 @@ MonoBehaviour:
   initialSpawnIntervalMax: 5
   despawnKorkeus: -10
   pelaaja: {fileID: 991089312531942397, guid: 6ccebd061d795f04e8a99e1b2f3fcc3a, type: 3}
-  kirves: {fileID: 8439079827239953726, guid: 8dbc1f6d171a1a2458ee417dfc995b80, type: 3}
-  tera: {fileID: 7065198539246935867, guid: e008f1d2de728d043a17954845068102, type: 3}
+  kirves: {fileID: 489376590800967939, guid: 8dbc1f6d171a1a2458ee417dfc995b80, type: 3}
+  tera: {fileID: 859910347201675858, guid: e008f1d2de728d043a17954845068102, type: 3}
   tuhoetaisyys: 1
-  nykyinenScore: {fileID: 0}
+  source: {fileID: 5060759422216682431, guid: 231f4b28185c97d4bbe86847818c3f13, type: 3}
+  highScoreTable: {fileID: 2525142026530765826, guid: b9577fa62d30cb64b8ee898a720f91cf, type: 3}
