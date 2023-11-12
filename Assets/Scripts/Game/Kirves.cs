@@ -6,8 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-
-
+// Kirveen toiminnallisuuden määrittävä luokka
 public class Kirves : MonoBehaviour
 {
     // Kaistojen koordinaatit
@@ -15,44 +14,40 @@ public class Kirves : MonoBehaviour
     private Vector3 kaistaB = new Vector3(0f, 1.1f, -7.55f);
     private Vector3 kaistaC = new Vector3(3f, 1.1f, -7.55f);
 
-
-    // Liikkumisnopeus 
+    // Liikkumisnopeus
     public float liikkumisNopeus = 15f;
 
-    // Lyannin animaation aika 
+    // Lyönnin animaation aika
     public float lyonninAika = 1.1f;
 
-    private Vector3 kohdeSijainti; // Tavoitesijainti liikkumista varten 
-    private bool lyontiKaynnissa = false; // Onko lyanti kaynnissa 
+    private Vector3 kohdeSijainti; // Tavoitesijainti liikkumista varten
+    private bool lyontiKaynnissa = false; // Onko lyönti käynnissä
 
-    // private string vastaanotettuBinary = GetBinaryInputFromESP32();
-
+    // Alustetaan keskimmäinen kaista alkukaistaksi
     void Start()
     {
-        // Asetetaan keskimmainen kaista alkukaistaksi
         AsetaKaista("B");
     }
 
-
+    // Päivitetään joka frame
     void Update()
     {
+        // Varmistetaan, ettei lyönti ole käynnissä ennen liikkeiden tarkastelua
         if (!lyontiKaynnissa)
         {
             LiikuKirvesta();
             VaihdaKaistaa();
             LyoKirveella();
         }
-        
     }
 
-
+    // Liikuttaa kirvestä kohti tavoitesijaintia
     void LiikuKirvesta()
     {
-        // Liikutetan kirvesta kohti tavoitesijaintia 
         transform.position = Vector3.MoveTowards(transform.position, kohdeSijainti, liikkumisNopeus * Time.deltaTime);
     }
 
-
+    // Vaihtaa kaistaa numeronäppäimillä 1-3
     void VaihdaKaistaa()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -69,10 +64,9 @@ public class Kirves : MonoBehaviour
         }
     }
 
-
+    // Asettaa tavoitesijainnin valitulle kaistalle
     void AsetaKaista(string kaista)
     {
-        // Asetetaan kohdesijainti valitulle kaistalle 
         if (kaista == "A")
         {
             kohdeSijainti = kaistaA;
@@ -87,37 +81,33 @@ public class Kirves : MonoBehaviour
         }
     }
 
-
+    // Käynnistää lyöntianimaation välilyönnillä (Space)
     void LyoKirveella()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // Kaynnistetaan lyonti 
             StartCoroutine(LyoAnimaatio());
         }
     }
 
-
+    // Suorittaa lyöntianimaation Coroutine-na (animaation viiveet ym.)
     IEnumerator LyoAnimaatio()
     {
         lyontiKaynnissa = true;
 
-
-        // Aloitetaan lyonnin animaatio
+        // Alustetaan lyönnin animaatio
         Quaternion alkuperainenRotaatio = transform.rotation;
         Vector3 alkuperainenPosition = transform.position;
-
 
         Quaternion tavoiteRotaatio = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         Vector3 tavoitePosition = new Vector3(transform.position.x, 0.5f, transform.position.z);
 
-
         float kulunutAika = 0f;
-         
+
         transform.rotation = tavoiteRotaatio;
         transform.position = tavoitePosition;
 
-        // Palautetaan kirveen alkuperainen rotaatio ja sijainti
+        // Palautetaan kirveen alkuperäinen rotaatio ja sijainti
         while (kulunutAika < lyonninAika)
         {
             kulunutAika += Time.deltaTime;
@@ -126,17 +116,13 @@ public class Kirves : MonoBehaviour
             transform.rotation = Quaternion.Slerp(tavoiteRotaatio, alkuperainenRotaatio, osuus);
             transform.position = Vector3.Lerp(tavoitePosition, alkuperainenPosition, osuus);
 
-
             yield return null;
         }
 
-
-        // Palautetaan kirveen alkuperainen rotaatio ja sijainti 
+        // Palautetaan kirveen alkuperäinen rotaatio ja sijainti
         // transform.rotation = alkuperainenRotaatio;
         // transform.position = alkuperainenPosition;
-
 
         lyontiKaynnissa = false;
     }
 }
-
