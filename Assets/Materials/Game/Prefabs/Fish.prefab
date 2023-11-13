@@ -232,10 +232,9 @@ MonoBehaviour:
   initialSpawnIntervalMin: 6
   initialSpawnIntervalMax: 5
   despawnKorkeus: -10
-  pelaaja: {fileID: 991089312531942397, guid: 6ccebd061d795f04e8a99e1b2f3fcc3a, type: 3}
-  kirves: {fileID: 489376590800967939, guid: 8dbc1f6d171a1a2458ee417dfc995b80, type: 3}
   tera: {fileID: 859910347201675858, guid: e008f1d2de728d043a17954845068102, type: 3}
-  tuhoetaisyys: 1
+  tuhoetaisyys: 2
+  teranNimi: Tera
   highScoreTable: {fileID: 0}
 --- !u!1 &2860454138151483864
 GameObject:

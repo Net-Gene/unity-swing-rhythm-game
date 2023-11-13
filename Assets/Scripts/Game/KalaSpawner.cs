@@ -22,7 +22,7 @@ public class KalaSpawner : MonoBehaviour
 
         if (timeSinceLastSpawn >= currentSpawnInterval)
         {
-            SpawnTukki(); // Spawneraa tukki
+            SpawnKala(); // Spawnataan kala
             SetNextSpawnTime(); // Aseta aika seuraavalle spawneraukselle
         }
     }
@@ -33,12 +33,13 @@ public class KalaSpawner : MonoBehaviour
         timeSinceLastSpawn = 0f; // Nollaa aika viimeisestä spawnerauksesta
     }
 
-    void SpawnTukki()
+    void SpawnKala()
     {
         // Spawnataan tukki ja asetetaan sen sijainti satunnaisesti kolmesta kaistasta (A, B tai C) 
         string kaista = RandomKaista(); // Valitaan satunnainen kaista
         Vector3 spawnSijainti = CalculateSpawnPosition(kaista); // Lasketaan spawnerin sijainti valitun kaistan perusteella 
-        GameObject fish = Instantiate(kalanPrefab, spawnSijainti, Quaternion.identity); // Luo tukki spawnerin sijaintiin
+
+        GameObject fish = Instantiate(kalanPrefab, spawnSijainti, Quaternion.Euler(0f, 180f, 0f)); // Luo Kala spawnerin sijaintiin
     }
 
     string RandomKaista()

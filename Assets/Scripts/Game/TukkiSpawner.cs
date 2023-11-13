@@ -22,7 +22,7 @@ public class TukkiSpawner : MonoBehaviour
 
         if (timeSinceLastSpawn >= currentSpawnInterval)
         {
-            SpawnTukki(); // Spawneraa tukki
+            SpawnTukki(); // spawnataan tukki
             SetNextSpawnTime(); // Aseta aika seuraavalle spawneraukselle
         }
     }

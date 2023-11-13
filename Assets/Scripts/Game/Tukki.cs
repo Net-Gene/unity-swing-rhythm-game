@@ -13,16 +13,17 @@ public class Tukki : MonoBehaviour
     // Korkeus, jossa tukki poistetaan
     public float despawnKorkeus = -10f;
 
-    // Pelaajan ja kirveen peliobjektit
-    public GameObject pelaaja;
-    public GameObject kirves;
-
     // Tukin liikkumisnopeus
     private float nopeus = 5f;
 
     // Tera-peliobjekti ja tuhoet‰isyys
-    public Transform tera;
+    private Transform tera;
+
     public float tuhoetaisyys = 1.0f;
+
+    // Muuttuja, joka tallentaa ter‰n nimen
+    public string teranNimi = "Tera";
+
 
     // Lista pisteille
     private List<ScoreEntry> scores = new List<ScoreEntry>();
@@ -40,18 +41,29 @@ public class Tukki : MonoBehaviour
 
     private void Start()
     {
-        // Etsit‰‰n pelaajan ja kirveen peliobjektit
-        pelaaja = GameObject.Find("Pelaaja");
-        kirves = GameObject.Find("Kirves");
-
-        // Etsit‰‰n HighScoreTable-skripti
-        highScoreTable = GameObject.FindObjectOfType<HighScoreTable>();
+        
     }
 
     private void Update()
     {
         // Liikutetaan objektia taaksep‰in nopeuden verran
         transform.Translate(Vector3.back * nopeus * Time.deltaTime);
+
+        // Etsit‰‰n ter‰-objekti dynaamisesti sen nimen perusteella
+        if (tera == null)
+        {
+            GameObject teraObj = GameObject.Find(teranNimi);
+
+            if (teraObj != null)
+            {
+                tera = teraObj.transform;
+            }
+            else
+            {
+                Debug.LogError("Tera-objektia ei lˆytynyt. Tarkista nimi ja varmista, ett‰ se on aktiivinen.");
+                return;
+            }
+        }
 
         // Lasketaan et‰isyys tukin ja ter‰n v‰lill‰
         float etaisyys = Vector3.Distance(transform.position, tera.position);
