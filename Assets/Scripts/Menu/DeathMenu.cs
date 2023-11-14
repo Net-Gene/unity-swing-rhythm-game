@@ -7,7 +7,6 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class DeathMenu : MonoBehaviour
 {
-    public HighScoreTable highScoreTable; // Viittaus HighScoreTable-skriptiin
     public TMP_InputField InputNameField;  // InputNameField (syötekenttä) valintapudotusvalikko
 
     // Uudelleen yritys
@@ -28,18 +27,5 @@ public class DeathMenu : MonoBehaviour
     {
         // Lopettaa sovelluksen suorituksen
         Application.Quit();
-    }
-
-    public void SaveName()
-    {
-        // Haetaan pelaajan nimi syötekentästä
-        string playerName = InputNameField.text;
-        PlayerPrefs.SetString("Name", playerName);
-
-        // Haetaan pelaajan nykyinen pisteet PlayerPrefsista
-        int score = PlayerPrefs.GetInt("CurrentScore", 0);
-
-        // Voit nyt kutsua HighScoreTable-skriptin metodia pisteiden ja nimen lisäämiseksi
-        highScoreTable.AddNewScore(playerName, score);
     }
 }

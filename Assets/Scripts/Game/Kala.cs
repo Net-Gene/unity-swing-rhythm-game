@@ -19,30 +19,16 @@ public class Kala : MonoBehaviour
     // Tera-peliobjekti ja tuhoet‰isyys
     public Transform tera;
 
-    public float tuhoetaisyys = 2.0f;
+    public float tuhoetaisyys = 1.0f;
 
     // Muuttuja, joka tallentaa ter‰n nimen
     public string teranNimi = "Tera";
 
-    // Lista pisteille
-    private List<ScoreEntry> scores = new List<ScoreEntry>();
 
-    // Viittaus HighScoreTable-skriptiin
-    public HighScoreTable highScoreTable;
-
-    // Luokka pisteiden ja pelaajan nimen tallentamiseksi
-    [System.Serializable]
-    public class ScoreEntry
+    void Start()
     {
-        public int score;    // Pisteet
-        public string name;  // Nimi
     }
 
-    private void Start()
-    {
-        // Etsit‰‰n HighScoreTable-skripti
-        highScoreTable = GameObject.FindObjectOfType<HighScoreTable>();
-    }
 
     private void Update()
     {
@@ -66,22 +52,19 @@ public class Kala : MonoBehaviour
         }
 
         // Lasketaan et‰isyys kalan ja ter‰n v‰lill‰
-        float etaisyys = Vector3.Distance(transform.position, tera.position);
-
+        float etaisyys = Vector3.Distance(transform.position, tera.transform.position);
+        Debug.LogError(etaisyys);
         // Tarkistetaan, onko et‰isyys alle tuhoet‰isyyden ja tarkistetaan y-akseli
-        if (etaisyys < tuhoetaisyys && Mathf.Abs(transform.position.y - tera.position.y) < 1.0f)
+        if (etaisyys < tuhoetaisyys /*&& Mathf.Abs(transform.position.y - tera.position.y) < 1*/)
         {
             // Kala tuhoutuu
             Destroy(gameObject);
 
             // Lis‰tt‰v‰t pisteet
-            int score = -15;
-
-            // Lis‰t‰‰n pisteet listaan yhdess‰ pelaajan nimen kanssa
-            scores.Add(new ScoreEntry { score = score, name = PlayerPrefs.GetString("Name") });
-
+            int value = 15;
+            GameLogic.score -= value;
             // Tulostetaan pisteet konsoliin
-            Debug.Log("Pisteet: " + score);
+            Debug.Log("Pisteet: " + GameLogic.score);
         }
 
         // Kala despawnaa, Jos se saavuttaa m‰‰ritetyn korkeuden
@@ -91,13 +74,11 @@ public class Kala : MonoBehaviour
             Destroy(gameObject);
 
             // Lis‰tt‰v‰t pisteet
-            int score = 5;
-
-            // Lis‰t‰‰n pisteet listaan yhdess‰ pelaajan nimen kanssa
-            scores.Add(new ScoreEntry { score = score, name = PlayerPrefs.GetString("Name") });
+            int value = 5;
+            GameLogic.score += value;
 
             // Tulostetaan pisteet konsoliin
-            Debug.Log("Pisteet: " + score);
+            Debug.Log("Pisteet: " + GameLogic.score);
         }
     }
 }

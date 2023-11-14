@@ -24,21 +24,6 @@ public class Tukki : MonoBehaviour
     // Muuttuja, joka tallentaa ter‰n nimen
     public string teranNimi = "Tera";
 
-
-    // Lista pisteille
-    private List<ScoreEntry> scores = new List<ScoreEntry>();
-
-    // Viittaus HighScoreTable-skriptiin
-    public HighScoreTable highScoreTable;
-
-    // Luokka pisteiden ja pelaajan nimen tallentamiseksi
-    [System.Serializable]
-    public class ScoreEntry
-    {
-        public int score;    // Pisteet
-        public string name;  // Nimi
-    }
-
     private void Start()
     {
         
@@ -75,13 +60,13 @@ public class Tukki : MonoBehaviour
             Destroy(gameObject);
 
             // Lasketaan pisteet pelilogiikan perusteella
-            int score = 10;
+            int value = 15;
+            GameLogic.score += value;
 
-            // Lis‰t‰‰n pisteet listaan yhdess‰ pelaajan nimen kanssa
-            scores.Add(new ScoreEntry { score = score, name = PlayerPrefs.GetString("Name") });
+
 
             // Tulostetaan pisteet konsoliin
-            Debug.Log("Pisteet: " + score);
+            Debug.Log("Pisteet: " + GameLogic.score);
         }
 
         // Jos tukki saavuttaa m‰‰ritetyn korkeuden, peli p‰‰ttyy
@@ -89,6 +74,7 @@ public class Tukki : MonoBehaviour
         {
             // Tukki tuhoutuu
             Destroy(gameObject);
+
 
             // Tulostetaan peli p‰‰ttyneeksi
             Debug.Log("Game Over");

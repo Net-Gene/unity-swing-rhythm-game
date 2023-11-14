@@ -233,9 +233,8 @@ MonoBehaviour:
   initialSpawnIntervalMax: 5
   despawnKorkeus: -10
   tera: {fileID: 859910347201675858, guid: e008f1d2de728d043a17954845068102, type: 3}
-  tuhoetaisyys: 2
+  tuhoetaisyys: 5
   teranNimi: Tera
-  highScoreTable: {fileID: 0}
 --- !u!1 &2860454138151483864
 GameObject:
   m_ObjectHideFlags: 0
