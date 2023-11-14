@@ -53,9 +53,9 @@ public class Kala : MonoBehaviour
 
         // Lasketaan etäisyys kalan ja terän välillä
         float etaisyys = Vector3.Distance(transform.position, tera.transform.position);
-        Debug.LogError(etaisyys);
+        Debug.LogError("Etäisyys:" + etaisyys);
         // Tarkistetaan, onko etäisyys alle tuhoetäisyyden ja tarkistetaan y-akseli
-        if (etaisyys < tuhoetaisyys /*&& Mathf.Abs(transform.position.y - tera.position.y) < 1*/)
+        if (etaisyys < tuhoetaisyys)
         {
             // Kala tuhoutuu
             Destroy(gameObject);
