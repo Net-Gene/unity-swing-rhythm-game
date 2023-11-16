@@ -19,12 +19,6 @@ public class HiScoreInput : MonoBehaviour
     /// </summary>
     [SerializeField] Text scoreText;
 
-    /// <summary>
-    /// score KORJAA JOSKUS JÄRKEVÄMÄKSI
-    /// </summary>
-    public float score;
-
-
 
     /// <summary>
     /// Selected Letter
@@ -48,7 +42,7 @@ public class HiScoreInput : MonoBehaviour
     {
         selectedLetter = 0;
         listOfLetters[selectedLetter].GetComponent<Animator>().enabled = true;
-        scoreText.text = score.ToString();
+        scoreText.text = GameLogic.score.ToString();
 
 
     }
@@ -84,7 +78,7 @@ public class HiScoreInput : MonoBehaviour
         if (UnityEngine.Input.GetKeyDown(KeyCode.Return)) {
             HiScore.Instance.Save(listOfLetters[0].GetComponent<Text>().text 
                 + listOfLetters[1].GetComponent<Text>().text + 
-                listOfLetters[2].GetComponent<Text>().text, score);
+                listOfLetters[2].GetComponent<Text>().text, GameLogic.score);
         }
     }
 

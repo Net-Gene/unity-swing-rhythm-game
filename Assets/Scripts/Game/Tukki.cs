@@ -6,35 +6,26 @@ using UnityEngine.SceneManagement;
 
 public class Tukki : MonoBehaviour
 {
-    // Alkuperäinen tukin ilmestymisväli minimi ja maksimi
-    public float initialSpawnIntervalMin = 6f;
-    public float initialSpawnIntervalMax = 5f;
-
     // Korkeus, jossa tukki poistetaan
-    public float despawnKorkeus = -10f;
+    private float despawnKorkeus = -10f;
 
     // Tukin liikkumisnopeus
     private float nopeus = 5f;
 
-    // Tera-peliobjekti ja tuhoetäisyys
+    // Tera-peliobjekti ja tuhoetï¿½isyys
     private Transform tera;
 
-    public float tuhoetaisyys = 1.0f;
+    private float tuhoetaisyys = 1.0f;
 
-    // Muuttuja, joka tallentaa terän nimen
-    public string teranNimi = "Tera";
-
-    private void Start()
-    {
-        
-    }
+    // Muuttuja, joka tallentaa terï¿½n nimen
+    private string teranNimi = "Tera";
 
     private void Update()
     {
-        // Liikutetaan objektia taaksepäin nopeuden verran
+        // Liikutetaan objektia taaksepï¿½in nopeuden verran
         transform.Translate(Vector3.back * nopeus * Time.deltaTime);
 
-        // Etsitään terä-objekti dynaamisesti sen nimen perusteella
+        // Etsitï¿½ï¿½n terï¿½-objekti dynaamisesti sen nimen perusteella
         if (tera == null)
         {
             GameObject teraObj = GameObject.Find(teranNimi);
@@ -45,16 +36,16 @@ public class Tukki : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Tera-objektia ei löytynyt. Tarkista nimi ja varmista, että se on aktiivinen.");
+                Debug.LogError("Tera-objektia ei lï¿½ytynyt. Tarkista nimi ja varmista, ettï¿½ se on aktiivinen.");
                 return;
             }
         }
 
-        // Lasketaan etäisyys tukin ja terän välillä
+        // Lasketaan etï¿½isyys tukin ja terï¿½n vï¿½lillï¿½
         float etaisyys = Vector3.Distance(transform.position, tera.position);
 
-        // Tarkistetaan, onko etäisyys alle tuhoetäisyyden ja tarkistetaan y-akseli
-        if (etaisyys < tuhoetaisyys && Mathf.Abs(transform.position.y - tera.position.y) < 1.0f)
+        // Tarkistetaan, onko etï¿½isyys alle tuhoetï¿½isyyden ja tarkistetaan y-akseli
+        if (etaisyys < tuhoetaisyys)
         {
             // Tukki tuhoutuu
             Destroy(gameObject);
@@ -69,17 +60,17 @@ public class Tukki : MonoBehaviour
             Debug.Log("Pisteet: " + GameLogic.score);
         }
 
-        // Jos tukki saavuttaa määritetyn korkeuden, peli päättyy
+        // Jos tukki saavuttaa mï¿½ï¿½ritetyn korkeuden, peli pï¿½ï¿½ttyy
         if (transform.position.z <= despawnKorkeus)
         {
             // Tukki tuhoutuu
             Destroy(gameObject);
 
 
-            // Tulostetaan peli päättyneeksi
+            // Tulostetaan peli pï¿½ï¿½ttyneeksi
             Debug.Log("Game Over");
 
-            // Siirrytään seuraavaan pelisceneen
+            // Siirrytï¿½ï¿½n seuraavaan pelisceneen
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }

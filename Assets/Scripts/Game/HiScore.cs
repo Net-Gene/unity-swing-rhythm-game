@@ -136,7 +136,7 @@ public class HiScore : MonoBehaviour
         UpdateScoreBoard(hiScoreStore.HiScoreElementList);
     }
 
-
+    /*
     /// <summary>
     /// ShowInputQuery
     /// </summary>
@@ -156,6 +156,7 @@ public class HiScore : MonoBehaviour
         }
         hiScoreInput.gameObject.SetActive(true);
     }
+    */
 
 
     /// <summary>

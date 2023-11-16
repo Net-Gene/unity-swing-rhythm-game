@@ -6,36 +6,27 @@ using UnityEngine.SceneManagement;
 
 public class Kala : MonoBehaviour
 {
-    // Alkuperäinen tukin ilmestymisväli minimi ja maksimi
-    public float initialSpawnIntervalMin = 6f;
-    public float initialSpawnIntervalMax = 5f;
-
     // Korkeus, jossa tukki poistetaan
-    public float despawnKorkeus = -10f;
+    private float despawnKorkeus = -10f;
 
     // Tukin liikkumisnopeus
     private float nopeus = 5f;
 
-    // Tera-peliobjekti ja tuhoetäisyys
-    public Transform tera;
+    // Tera-peliobjekti ja tuhoetï¿½isyys
+    private Transform tera;
 
-    public float tuhoetaisyys = 1.0f;
+    private float tuhoetaisyys = 1.0f;
 
-    // Muuttuja, joka tallentaa terän nimen
-    public string teranNimi = "Tera";
-
-
-    void Start()
-    {
-    }
+    // Muuttuja, joka tallentaa terï¿½n nimen
+    private string teranNimi = "Tera";
 
 
     private void Update()
     {
-        // Liikutetaan objektia eteenpäin nopeuden verran
+        // Liikutetaan objektia eteenpï¿½in nopeuden verran
         transform.Translate(Vector3.forward * nopeus * Time.deltaTime);
 
-        // Etsitään terä-objekti dynaamisesti sen nimen perusteella
+        // Etsitï¿½ï¿½n terï¿½-objekti dynaamisesti sen nimen perusteella
         if (tera == null)
         {
             GameObject teraObj = GameObject.Find(teranNimi);
@@ -46,34 +37,33 @@ public class Kala : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Tera-objektia ei löytynyt. Tarkista nimi ja varmista, että se on aktiivinen.");
+                Debug.LogError("Tera-objektia ei lï¿½ytynyt. Tarkista nimi ja varmista, ettï¿½ se on aktiivinen.");
                 return;
             }
         }
 
-        // Lasketaan etäisyys kalan ja terän välillä
+        // Lasketaan etï¿½isyys kalan ja terï¿½n vï¿½lillï¿½
         float etaisyys = Vector3.Distance(transform.position, tera.transform.position);
-        Debug.LogError("Etäisyys:" + etaisyys);
-        // Tarkistetaan, onko etäisyys alle tuhoetäisyyden ja tarkistetaan y-akseli
+        // Tarkistetaan, onko etï¿½isyys alle tuhoetï¿½isyyden ja tarkistetaan y-akseli
         if (etaisyys < tuhoetaisyys)
         {
             // Kala tuhoutuu
             Destroy(gameObject);
 
-            // Lisättävät pisteet
+            // Lisï¿½ttï¿½vï¿½t pisteet
             int value = 15;
             GameLogic.score -= value;
             // Tulostetaan pisteet konsoliin
             Debug.Log("Pisteet: " + GameLogic.score);
         }
 
-        // Kala despawnaa, Jos se saavuttaa määritetyn korkeuden
+        // Kala despawnaa, Jos se saavuttaa mï¿½ï¿½ritetyn korkeuden
         if (transform.position.z <= despawnKorkeus)
         {
             // Kala tuhoutuu
             Destroy(gameObject);
 
-            // Lisättävät pisteet
+            // Lisï¿½ttï¿½vï¿½t pisteet
             int value = 5;
             GameLogic.score += value;
 
