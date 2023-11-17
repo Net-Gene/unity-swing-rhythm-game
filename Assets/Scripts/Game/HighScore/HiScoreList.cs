@@ -27,7 +27,10 @@ public class HiScoreList
         }
     }
 
-
+    public HiScoreList()
+    {
+        hiScoreElementList = new List<HiScoreElement>();
+    }
 
     /// <summary>
     /// AddToList

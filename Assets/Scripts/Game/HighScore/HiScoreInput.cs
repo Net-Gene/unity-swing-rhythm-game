@@ -76,7 +76,7 @@ public class HiScoreInput : MonoBehaviour
 
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Return)) {
-            HiScore.Instance.Save(listOfLetters[0].GetComponent<Text>().text 
+            HiScoreInputController.Instance.Save(listOfLetters[0].GetComponent<Text>().text 
                 + listOfLetters[1].GetComponent<Text>().text + 
                 listOfLetters[2].GetComponent<Text>().text, GameLogic.score);
         }
