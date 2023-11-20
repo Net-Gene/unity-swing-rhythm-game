@@ -184,11 +184,26 @@ public class HiScore : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     HiScoreList ReadScore()
-    {
-        HiScoreList sb = null;
-
-        if (File.Exists(Application.persistentDataPath + "/s002.save"))
         {
+            HiScoreList sb = null;
+
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/s002.save", FileMode.Open);
+            sb = (HiScoreList)bf.Deserialize(file);
+            file.Close();
+            sb = new HiScoreList();
+            sb.HiScoreElementList = new List<HiScoreElement>();
+            SaveScoreBoard(sb);
+
+            Debug.Log("TULOSTETAAN PISTETTAULUKKO");
+            foreach (HiScoreElement e in sb.HiScoreElementList)
+                {
+                    Debug.Log(e.Name + " - " + e.Score);
+                }
+            return sb;
+            /*
+            if (File.Exists(Application.persistentDataPath + "/s002.save"))
+            {
 
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/s002.save", FileMode.Open);
@@ -223,6 +238,6 @@ public class HiScore : MonoBehaviour
                 Debug.Log(e.Name + " - " + e.Score);
             }
             return sb;
-        }
+        }*/
     }
 }

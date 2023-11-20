@@ -8,7 +8,7 @@ using UnityEngine;
 public class HiScoreInputController : MonoBehaviour
 {
     // M‰‰ritet‰‰n GameObject hiScoreInput, joka voidaan asettaa Inspectorissa
-    [SerializeField] private GameObject hiScoreInput;
+    [SerializeField] public GameObject hiScoreInput;
 
     // M‰‰ritet‰‰n staattinen HiScoreInputController-instanssi
     private static HiScoreInputController instance;
@@ -43,7 +43,7 @@ public class HiScoreInputController : MonoBehaviour
     {
         if (HiScoreInputController.Instance != null)
         {
-            if (HiScoreInputController.hiScoreStore != null)
+            if (HiScoreInputController.hiScoreStore != null && HiScoreInputController.hiScoreStore.HiScoreElementList != null)
             {
                 // Luodaan uusi HiScoreElement ja lis‰t‰‰n se listaan
                 HiScoreElement newScoreElement = new HiScoreElement(name, score);

@@ -17,7 +17,7 @@ public class HiScoreInput : MonoBehaviour
     /// <summary>
     /// Score Text
     /// </summary>
-    [SerializeField] Text scoreText;
+    [SerializeField] public Text scoreText;
 
 
     /// <summary>

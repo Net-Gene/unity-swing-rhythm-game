@@ -9,7 +9,7 @@ using UnityEngine;
 public class HiScoreElement
 {
     public string Name;
-    public float Score;
+    public float Score = GameLogic.score;
 
     public HiScoreElement(string name, float score)
     {

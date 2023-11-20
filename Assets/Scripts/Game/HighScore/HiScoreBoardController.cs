@@ -9,15 +9,16 @@ public class HiScoreBoardController : MonoBehaviour
 {
     // HiScoreBoardController vastaa huipputulostaulusta pelissä.
 
-    [SerializeField] private GameObject hiScoreTable; // GameObject huipputulostaululle.
-    [SerializeField] private GameObject hiScoreElement; // GameObject yksittäiselle huipputulokselle.
-    [SerializeField] private GameObject hiScoreBoard; // GameObject koko huipputulostaulun alueelle.
+    [SerializeField] public GameObject hiScoreTable; // GameObject huipputulostaululle.
+    [SerializeField] public GameObject hiScoreElement; // GameObject yksittäiselle huipputulokselle.
+    [SerializeField] public GameObject hiScoreBoard; // GameObject koko huipputulostaulun alueelle.
 
     private static HiScoreBoardController instance; // Staattinen instanssi HiScoreBoardControllerista.
 
     public static HiScoreBoardController Instance
     {
         get { return instance; }
+        set { instance = value; }
     }
 
     void Start()
@@ -52,11 +53,13 @@ public class HiScoreBoardController : MonoBehaviour
             return;
         }
 
+        
         // Poista kaikki huipputaulun lapsiobjektit.
         foreach (Transform tf in hiScoreTable.transform)
         {
             Destroy(tf.gameObject);
         }
+        
 
         // Luo uudet huipputulosobjektit annetun listan perusteella.
         foreach (HiScoreElement el in list)
