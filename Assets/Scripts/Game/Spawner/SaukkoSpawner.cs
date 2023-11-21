@@ -2,44 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KalaSpawner : MonoBehaviour
+public class SaukkoSpawner : MonoBehaviour
 {
-    public GameObject kalanPrefab; // Kalan esiprefab, joka spawnerataan
-    public float spawnIntervalMin = 5f; // Lyhin aika tukin spawnerauksen v‰lill‰
-    public float spawnIntervalMax = 6f; // Pisin aika tukin spawnerauksen v‰lill‰
+    public GameObject saukonPrefab; // Kalan esiprefab, joka spawnerataan
+    private float spawnIntervalMin = 20f; // Lyhin aika tukin spawnerauksen v√§lill√§
+    private float spawnIntervalMax = 40f; // Pisin aika tukin spawnerauksen v√§lill√§
 
-    private float timeSinceLastSpawn; // Aika viimeisest‰ spawnerauksesta
+    private float timeSinceLastSpawn; // Aika viimeisest√§ spawnerauksesta
     private float currentSpawnInterval; // Nykyinen aika seuraavaan spawneraukseen
 
     void Start()
     {
-        currentSpawnInterval = Random.Range(spawnIntervalMin, spawnIntervalMax); // Aseta satunnainen aika seuraavalle spawneraukselle
+        int chance = Random.Range(1, 100);
+        if(chance <= 10)
+        {
+            currentSpawnInterval = Random.Range(spawnIntervalMin, spawnIntervalMax); // Aseta satunnainen aika seuraavalle spawneraukselle
+        }
     }
 
     void Update()
     {
-        timeSinceLastSpawn += Time.deltaTime; // Laske kulunut aika viimeisest‰ spawnerauksesta
+        timeSinceLastSpawn += Time.deltaTime; // Laske kulunut aika viimeisest√§ spawnerauksesta
 
         if (timeSinceLastSpawn >= currentSpawnInterval)
         {
-            SpawnKala(); // Spawnataan kala
-            SetNextSpawnTime(); // Aseta aika seuraavalle spawneraukselle
+            SpawnSaukko(); // Spawnataan kala
         }
     }
 
     void SetNextSpawnTime()
     {
         currentSpawnInterval = Random.Range(spawnIntervalMin, spawnIntervalMax); // Aseta satunnainen aika seuraavalle spawneraukselle
-        timeSinceLastSpawn = 0f; // Nollaa aika viimeisest‰ spawnerauksesta
+        timeSinceLastSpawn = 0f; // Nollaa aika viimeisest√§ spawnerauksesta
     }
 
-    void SpawnKala()
+    void SpawnSaukko()
     {
         // Spawnataan tukki ja asetetaan sen sijainti satunnaisesti kolmesta kaistasta (A, B tai C) 
         string kaista = RandomKaista(); // Valitaan satunnainen kaista
         Vector3 spawnSijainti = CalculateSpawnPosition(kaista); // Lasketaan spawnerin sijainti valitun kaistan perusteella 
 
-        GameObject fish = Instantiate(kalanPrefab, spawnSijainti, Quaternion.Euler(0f, 180f, 0f)); // Luo Kala spawnerin sijaintiin
+        GameObject goldenSaukko = Instantiate(saukonPrefab, spawnSijainti, Quaternion.Euler(0f, 180f, 0f)); // Luo Kala spawnerin sijaintiin
     }
 
     string RandomKaista()

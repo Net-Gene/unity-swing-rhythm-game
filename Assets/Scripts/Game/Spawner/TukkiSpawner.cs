@@ -5,8 +5,8 @@ using UnityEngine;
 public class TukkiSpawner : MonoBehaviour
 {
     public GameObject tukinPrefab; // Tukin esiprefab, joka spawnerataan
-    public float spawnIntervalMin = 5f; // Lyhin aika tukin spawnerauksen välillä
-    public float spawnIntervalMax = 6f; // Pisin aika tukin spawnerauksen välillä
+    private float spawnIntervalMin = 5f; // Lyhin aika tukin spawnerauksen välillä
+    private float spawnIntervalMax = 6f; // Pisin aika tukin spawnerauksen välillä
 
     private float timeSinceLastSpawn; // Aika viimeisestä spawnerauksesta
     private float currentSpawnInterval; // Nykyinen aika seuraavaan spawneraukseen
