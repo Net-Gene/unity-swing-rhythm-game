@@ -5,11 +5,13 @@ using UnityEngine;
 public class SaukkoSpawner : MonoBehaviour
 {
     public GameObject saukonPrefab; // Kalan esiprefab, joka spawnerataan
-    private float spawnIntervalMin = 20f; // Lyhin aika tukin spawnerauksen välillä
-    private float spawnIntervalMax = 40f; // Pisin aika tukin spawnerauksen välillä
+    private float spawnIntervalMin = 4f; //20f; // Lyhin aika tukin spawnerauksen välillä
+    private float spawnIntervalMax = 5f; //40f; // Pisin aika tukin spawnerauksen välillä
 
-    private float timeSinceLastSpawn; // Aika viimeisestä spawnerauksesta
-    private float currentSpawnInterval; // Nykyinen aika seuraavaan spawneraukseen
+    private float timeSinceLastSpawn = 0f; // Aika viimeisestä spawnerauksesta
+    private float currentSpawnInterval = 99999999; // Nykyinen aika seuraavaan spawneraukseen
+
+    private bool f = false;
 
     void Start()
     {
@@ -22,12 +24,18 @@ public class SaukkoSpawner : MonoBehaviour
 
     void Update()
     {
-        timeSinceLastSpawn += Time.deltaTime; // Laske kulunut aika viimeisestä spawnerauksesta
-
-        if (timeSinceLastSpawn >= currentSpawnInterval)
+        if(f == false)
         {
-            SpawnSaukko(); // Spawnataan kala
+            timeSinceLastSpawn += Time.deltaTime; // Laske kulunut aika viimeisestä spawnerauksesta
+
+            if (timeSinceLastSpawn >= currentSpawnInterval)
+            {
+                SpawnSaukko(); // Spawnataan kala
+                SetNextSpawnTime();
+                f = true;
+            }
         }
+        
     }
 
     void SetNextSpawnTime()
@@ -42,7 +50,7 @@ public class SaukkoSpawner : MonoBehaviour
         string kaista = RandomKaista(); // Valitaan satunnainen kaista
         Vector3 spawnSijainti = CalculateSpawnPosition(kaista); // Lasketaan spawnerin sijainti valitun kaistan perusteella 
 
-        GameObject goldenSaukko = Instantiate(saukonPrefab, spawnSijainti, Quaternion.Euler(0f, 180f, 0f)); // Luo Kala spawnerin sijaintiin
+        GameObject goldenSaukko = Instantiate(saukonPrefab, spawnSijainti, Quaternion.Euler(-90f, 180f, 0f)); // Luo Kala spawnerin sijaintiin
     }
 
     string RandomKaista()

@@ -24,7 +24,7 @@ public class Majava : MonoBehaviour
     private void Update()
     {
         // Liikutetaan objektia eteenp�in nopeuden verran
-        transform.Translate(Vector3.forward * nopeus * Time.deltaTime);
+        transform.Translate(Vector3.left * nopeus * Time.deltaTime);
 
         // Etsit��n ter�-objekti dynaamisesti sen nimen perusteella
         if (tera == null)

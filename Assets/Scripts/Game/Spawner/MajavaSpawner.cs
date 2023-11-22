@@ -40,7 +40,7 @@ public class MajavaSpawner : MonoBehaviour
         string kaista = RandomKaista(); // Valitaan satunnainen kaista
         Vector3 spawnSijainti = CalculateSpawnPosition(kaista); // Lasketaan spawnerin sijainti valitun kaistan perusteella 
 
-        GameObject majava = Instantiate(majavanPrefab, spawnSijainti, Quaternion.Euler(0f, 180f, 0f)); // Luo Kala spawnerin sijaintiin
+        GameObject majava = Instantiate(majavanPrefab, spawnSijainti, Quaternion.Euler(0f, -90f, 0f)); // Luo Kala spawnerin sijaintiin
     }
 
     string RandomKaista()
@@ -55,15 +55,15 @@ public class MajavaSpawner : MonoBehaviour
 
         if (kaista == "A")
         {
-            spawnSijainti = new Vector3(-3f, -0.15f, 10f); // Aseta sijainti kaistan A mukaan
+            spawnSijainti = new Vector3(-3f, 0.3f, 10f); // Aseta sijainti kaistan A mukaan
         }
         else if (kaista == "B")
         {
-            spawnSijainti = new Vector3(0f, -0.15f, 10f); // Aseta sijainti kaistan B mukaan
+            spawnSijainti = new Vector3(0f, 0.3f, 10f); // Aseta sijainti kaistan B mukaan
         }
         else if (kaista == "C")
         {
-            spawnSijainti = new Vector3(3f, -0.15f, 10f); // Aseta sijainti kaistan C mukaan
+            spawnSijainti = new Vector3(3f, 0.3f, 10f); // Aseta sijainti kaistan C mukaan
         }
 
         return spawnSijainti; // Palauta laskettu sijainti

@@ -24,7 +24,7 @@ public class Saukko : MonoBehaviour
     private void Update()
     {
         // Liikutetaan objektia eteenp�in nopeuden verran
-        transform.Translate(Vector3.forward * nopeus * Time.deltaTime);
+        transform.Translate(Vector3.down * nopeus * Time.deltaTime);
 
         // Etsit��n ter�-objekti dynaamisesti sen nimen perusteella
         if (tera == null)
