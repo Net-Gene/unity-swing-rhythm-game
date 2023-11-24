@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class KalaSpawner : MonoBehaviour
@@ -38,14 +39,32 @@ public class KalaSpawner : MonoBehaviour
     {
         // Spawnataan tukki ja asetetaan sen sijainti satunnaisesti kolmesta kaistasta (A, B tai C) 
         string kaista = RandomKaista(); // Valitaan satunnainen kaista
-        Vector3 spawnSijainti = CalculateSpawnPosition(kaista); // Lasketaan spawnerin sijainti valitun kaistan perusteella 
 
-        GameObject fish = Instantiate(kalanPrefab, spawnSijainti, Quaternion.Euler(0f, 180f, 0f)); // Luo Kala spawnerin sijaintiin
+        if (kaista == SpawnManager.kaistaKirjain)
+        {
+            kaista = OtettuSijainti(kaista);
+            Vector3 spawnSijainti = CalculateSpawnPosition(kaista); // Lasketaan spawnerin sijainti valitun kaistan perusteella
+
+            GameObject fish = Instantiate(kalanPrefab, spawnSijainti, Quaternion.Euler(0f, 180f, 0f)); // Luo Kala spawnerin sijaintiin
+            SpawnManager.kaistaKirjain = kaista;
+        }
+        else
+        {
+            Vector3 spawnSijainti = CalculateSpawnPosition(kaista); // Lasketaan spawnerin sijainti valitun kaistan perusteella
+
+            GameObject fish = Instantiate(kalanPrefab, spawnSijainti, Quaternion.Euler(0f, 180f, 0f)); // Luo Kala spawnerin sijaintiin
+            SpawnManager.kaistaKirjain = kaista;
+        }
+    }
+
+    string OtettuSijainti(string kaista)
+    {
+        return kaista == "A" ? "B" : kaista == "B" ? "C" : kaista == "C" ? "A" : "A";
     }
 
     string RandomKaista()
     {
-        int kaistaNumero = Random.Range(1, 4); // Valitse satunnainen kaista numerona (1, 2 tai 3)
+        int kaistaNumero = Random.Range(1, 3); // Valitse satunnainen kaista numerona (1, 2 tai 3)
         return kaistaNumero == 1 ? "A" : (kaistaNumero == 2 ? "B" : "C"); // Muunna numeron vastaavaksi kaistaksi (A, B tai C)
     }
 
