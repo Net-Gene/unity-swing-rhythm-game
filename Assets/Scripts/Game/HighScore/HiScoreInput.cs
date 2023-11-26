@@ -35,6 +35,9 @@ public class HiScoreInput : MonoBehaviour
     /// </summary>
     private Color defaultColor;
 
+    [SerializeField] public GameObject gameObjectToActivate;
+    [SerializeField] public GameObject gameObjectToDeactivate;
+
     /// <summary>
     /// This function is called when the object becomes enabled and active.
     /// </summary>
@@ -79,6 +82,10 @@ public class HiScoreInput : MonoBehaviour
             HiScoreInputController.Instance.Save(listOfLetters[0].GetComponent<Text>().text 
                 + listOfLetters[1].GetComponent<Text>().text + 
                 listOfLetters[2].GetComponent<Text>().text, GameLogic.score);
+
+            // Activate and deactivate GameObjects
+            gameObjectToActivate.SetActive(true);
+            gameObjectToDeactivate.SetActive(false);
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
@@ -7,7 +8,7 @@ using UnityEngine.SocialPlatforms;
 /// GameLogic
 /// </summary>
 public class GameLogic : MonoBehaviour
-{
+{    
     /// <summary>
     /// time
     /// </summary>
@@ -23,9 +24,4 @@ public class GameLogic : MonoBehaviour
 
         time = Time.time;
     }
-
-    /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
-    
 }
