@@ -8,7 +8,7 @@ using static GameOverMenuControls;
 
 public class MenuControls : MonoBehaviour
 {
-    public enum MenuOption { Play, Highscore, Options, Exit, Back, Graphics, Resolution, Volume }
+    public enum MenuOption { Play, Highscore, Options, Exit, Back, Graphics, Resolution, Volume, Fullscreen }
 
     protected virtual MenuOption CurrentOption { get; set; }
 
@@ -24,96 +24,109 @@ public class MenuControls : MonoBehaviour
     public TMP_Dropdown graphicsDropdown;
     public TMP_Dropdown resolutionDropdown;
     public GameObject volumeSlider;
+    public GameObject fullscreenButton;
 
     private GameObject highlightedButton;
 
-    private const string BackButtonName = "BackButton";
+    //private bool playButtonHighlighted = false;
+    private bool backButtonHighlighted = false;
+    private bool isGameOverSceneLoaded = false;
 
     protected virtual void SetCurrentOption(MenuOption option)
     {
         CurrentOption = option;
     }
 
+    private GameObject retryScreen;
+
     protected virtual void Start()
     {
         CurrentOption = MenuOption.Play;
-        HighlightButtonBasedOnScene();
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
-
-    void Update()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        HandleMenuNavigation();
-        SimulateButtonClick();
+        if (scene.name == "GameOver")
+        {
+            retryScreen = GameObject.Find("RetryScreen");
+            isGameOverSceneLoaded = true;
+        }
+        else
+        {
+            isGameOverSceneLoaded = false;
+        }
     }
 
-    protected virtual void HighlightButtonBasedOnScene()
+    protected virtual void Update()
     {
-        int activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        if (SceneManager.GetSceneByName("Menu").isLoaded && mainMenu.activeSelf)
+        {
+            HandleMainMenuNavigation();
+        }
+        else if (SceneManager.GetSceneByName("Menu").isLoaded && optionsMenu.activeSelf)
+        {
+            HandleOptionsMenuNavigation();
+        }
+        else if (SceneManager.GetSceneByName("HighScoreTable").isLoaded)
+        {
+            if (!backButtonHighlighted)
+            {
+                HighlightButton(backButton);
+                backButtonHighlighted = true;
+            }
 
-        if (activeSceneIndex == 0)
-        {
-            HighlightButton(playButton);
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                SimulateButtonClick();
+            }
         }
-        else if (activeSceneIndex == 1)
+        if (SceneManager.GetSceneByName("GameOver").isLoaded && retryScreen != null && retryScreen.activeSelf)
         {
-            HighlightButton(null);
+            Debug.Log("Entered gameoverscene");
+            GameOverMenuControls gameOverMenu = FindObjectOfType<GameOverMenuControls>();
+            if (gameOverMenu != null)
+            {
+                gameOverMenu.HandleMainMenuNavigation();
+                HighlightButton(gameOverMenu.quitButton);
+            }
         }
-        else if (activeSceneIndex == 2)
-        {
-            StartCoroutine(WaitForRetryScreen());
-        }
-        else if (activeSceneIndex == 3)
-        {
-            HighlightButton(backButton);
-        }
-        // Add more conditions as needed
+
     }
 
-    protected virtual IEnumerator WaitForRetryScreen()
-    {
-        GameObject retryScreen = GameObject.Find("RetryScreen");
-
-        while (retryScreen == null || !retryScreen.activeSelf)
-        {
-            yield return null;
-        }
-
-        // Execute your logic after the optionsMenu is active
-        GameOverMenuControls gameOverMenu = FindObjectOfType<GameOverMenuControls>();
-        if (gameOverMenu != null)
-        {
-            gameOverMenu.ChangeOption((MenuOption)GameOverMenuOption.Quit,
-                                      (MenuOption)GameOverMenuOption.Retry,
-                                      (MenuOption)GameOverMenuOption.MainMenu);
-            CurrentOption = MenuOption.Play;
-        }
-    }
-
-    protected virtual void HandleMenuNavigation()
+    protected virtual void HandleMainMenuNavigation()
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            MoveSelectionUp();
+            ChangeOption(MenuOption.Play, MenuOption.Exit, MenuOption.Options, MenuOption.Highscore);
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            MoveSelectionDown();
+            ChangeOption(MenuOption.Exit, MenuOption.Play, MenuOption.Highscore, MenuOption.Options);
+
         }
         else if (Input.GetKeyDown(KeyCode.Return))
         {
             SimulateButtonClick();
-            if (CurrentOption == MenuOption.Options)
-            {
-                NavigateOptionsSubmenu();
-            }
         }
     }
 
-    protected virtual void MoveSelectionUp() 
-        => ChangeOption(MenuOption.Play, MenuOption.Exit, MenuOption.Options, MenuOption.Highscore);
+    protected virtual void HandleOptionsMenuNavigation()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            ChangeOption(MenuOption.Back, MenuOption.Volume, MenuOption.Resolution, MenuOption.Graphics, MenuOption.Fullscreen);
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            ChangeOption(MenuOption.Fullscreen, MenuOption.Graphics, MenuOption.Resolution, MenuOption.Volume, MenuOption.Back);
 
-    protected virtual void MoveSelectionDown()
-        => ChangeOption(MenuOption.Exit, MenuOption.Play, MenuOption.Highscore, MenuOption.Options);
+        }
+        else if (Input.GetKeyDown(KeyCode.Return))
+        {
+            SimulateButtonClick();
+        }
+    }
+
     protected virtual void ChangeOption(params MenuOption[] options)
     {
         int index = Array.IndexOf(options, CurrentOption);
@@ -129,35 +142,24 @@ public class MenuControls : MonoBehaviour
         HighlightButton(GetCurrentButton());
     }
 
-    protected virtual void NavigateOptionsSubmenu()
-    {
-        // Handle navigation within the options menu
-        ChangeOption(MenuOption.Graphics, MenuOption.Resolution, MenuOption.Volume, MenuOption.Back);
-    }
-
     protected virtual void HighlightButton(GameObject button)
     {
         Debug.Log("Highlighting: " + (button != null ? button.name : "null"));
         highlightedButton = button;
-    }
 
+        // Simulate mouse hover by selecting the button
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(button);
+    }
     protected virtual void SimulateButtonClick()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        Button buttonComponent = highlightedButton?.GetComponent<Button>();
+        if (buttonComponent != null)
         {
-            Button buttonComponent = highlightedButton?.GetComponent<Button>();
-            if (buttonComponent != null)
-            {
-                buttonComponent.onClick.Invoke();
-            }
-            else
-            {
-                Debug.LogError("The selected GameObject does not have a Button component.");
-            }
+            buttonComponent.onClick.Invoke();
         }
         else
         {
-            Debug.LogError("No GameObject is currently highlighted.");
+            Debug.LogError("The selected GameObject does not have a Button component.");
         }
     }
 
@@ -179,6 +181,8 @@ public class MenuControls : MonoBehaviour
                 return graphicsDropdown.gameObject;
             case MenuOption.Resolution:
                 return resolutionDropdown.gameObject;
+            case MenuOption.Fullscreen:
+                return fullscreenButton.gameObject;
             case MenuOption.Volume:
                 return volumeSlider;
             default:

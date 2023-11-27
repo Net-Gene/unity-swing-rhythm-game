@@ -10,6 +10,9 @@ public class GameOverMenuControls : MenuControls
     public GameObject quitButton;
     public GameObject retryButton;
     public GameObject mainMenuButton;
+
+    private bool quitButtonHighlighted = false;
+
     protected override void ChangeOption(params MenuOption[] options)
     {
         base.ChangeOption(options);
@@ -18,35 +21,26 @@ public class GameOverMenuControls : MenuControls
         // ...
     }
 
-    protected override void MoveSelectionUp()
-        => ChangeOption((MenuOption)GameOverMenuOption.Quit, (MenuOption)GameOverMenuOption.MainMenu, (MenuOption)GameOverMenuOption.Retry);
-
-    protected override void MoveSelectionDown()
+    protected override void HandleMainMenuNavigation()
     {
-        switch ((GameOverMenuOption)CurrentOption)
+        base.HandleMainMenuNavigation();
+        if (!quitButtonHighlighted)
         {
-            case GameOverMenuOption.Quit:
-                CurrentOption = (MenuOption)GameOverMenuOption.Retry;
-                break;
-            case GameOverMenuOption.Retry:
-                CurrentOption = (MenuOption)GameOverMenuOption.MainMenu;
-                break;
-            case GameOverMenuOption.MainMenu:
-                CurrentOption = (MenuOption)GameOverMenuOption.Quit;
-                break;
-            // Add additional cases as needed
-            default:
-                base.MoveSelectionDown();
-                return;
+            HighlightButton(quitButton);
+            quitButtonHighlighted = true;
         }
-
-        HighlightButton(GetCurrentButton());
-    }
-
-    protected override void Start()
-    {
-        CurrentOption = (MenuOption)GameOverMenuOption.Quit;
-        HighlightButtonBasedOnScene();
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            ChangeOption((MenuOption)GameOverMenuOption.Quit, (MenuOption)GameOverMenuOption.MainMenu, (MenuOption)GameOverMenuOption.Retry);
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            ChangeOption((MenuOption)GameOverMenuOption.Retry, (MenuOption)GameOverMenuOption.MainMenu, (MenuOption)GameOverMenuOption.Quit);
+        }
+        else if (Input.GetKeyDown(KeyCode.Return))
+        {
+            SimulateButtonClick();
+        }
     }
 
     protected override GameObject GetCurrentButton()

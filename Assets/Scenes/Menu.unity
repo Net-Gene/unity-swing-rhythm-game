@@ -4958,6 +4958,7 @@ MonoBehaviour:
   graphicsDropdown: {fileID: 1628081732}
   resolutionDropdown: {fileID: 2050501384}
   volumeSlider: {fileID: 2115005130}
+  fullscreenButton: {fileID: 1309378390}
 --- !u!1 &1309189755
 GameObject:
   m_ObjectHideFlags: 0
@@ -5672,7 +5673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 6
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -6877,8 +6878,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
+    m_Mode: 6
+    m_WrapAround: 1
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}

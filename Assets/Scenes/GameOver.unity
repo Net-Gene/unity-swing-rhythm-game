@@ -3252,6 +3252,9 @@ MonoBehaviour:
   mainMenu: {fileID: 0}
   optionsMenu: {fileID: 0}
   graphicsDropdown: {fileID: 0}
+  resolutionDropdown: {fileID: 0}
+  volumeSlider: {fileID: 0}
+  fullscreenButton: {fileID: 0}
   quitButton: {fileID: 1302529972}
   retryButton: {fileID: 2053086279}
   mainMenuButton: {fileID: 1876757870}
