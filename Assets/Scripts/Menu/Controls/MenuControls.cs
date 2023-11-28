@@ -4,134 +4,131 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static GameOverMenuControls;
 
 public class MenuControls : MonoBehaviour
 {
+    // Luodaan lueteltu tyyppi (enum) MenuOption, joka m‰‰rittelee valikkoasetukset
     public enum MenuOption { Play, Highscore, Options, Exit, Back, Graphics, Resolution, Volume, Fullscreen }
 
+    // Suojattu virtuaalinen ominaisuus nykyiselle valikkoasetukselle
     protected virtual MenuOption CurrentOption { get; set; }
 
+    // Viittaukset valikkopainikkeisiin
     public GameObject playButton;
     public GameObject highscoreButton;
     public GameObject optionsButton;
     public GameObject exitButton;
     public GameObject backButton;
 
+    // Viittaukset valikkoruutuihin
     public GameObject mainMenu;
     public GameObject optionsMenu;
 
+    // Viittaukset pudotusvalikon ja liukus‰‰timen komponentteihin
     public TMP_Dropdown graphicsDropdown;
     public TMP_Dropdown resolutionDropdown;
     public GameObject volumeSlider;
     public GameObject fullscreenButton;
 
+    // Korostettu painike ja tila, joka seuraa, onko painike korostettu
     private GameObject highlightedButton;
+    private bool isButtonHighlighted = false;
 
-    /*private bool playButtonHighlighted = false;
-    private bool isbackButtonLoaded = false;*/
-    private bool isGameOverSceneLoaded = false;
-    private bool backButtonHighlighted = false;
-
-
-
-    protected virtual void SetCurrentOption(MenuOption option)
-    {
-        CurrentOption = option;
-    }
-
-    private GameObject retryScreen;
-
+    // Alustetaan nykyinen asetus "Play"
     protected virtual void Start()
     {
         CurrentOption = MenuOption.Play;
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "GameOver")
-        {
-            retryScreen = GameObject.Find("RetryScreen");
-            isGameOverSceneLoaded = true;
-        }
-        else
-        {
-            isGameOverSceneLoaded = false;
-        }
     }
 
+    // P‰ivitet‰‰n joka ruutu
     protected virtual void Update()
     {
+        // K‰sitell‰‰n p‰‰valikon navigointia, jos p‰‰valikko on aktiivinen
         if (SceneManager.GetSceneByName("Menu").isLoaded && mainMenu.activeSelf)
         {
             HandleMainMenuNavigation();
-
         }
+        // K‰sitell‰‰n asetusvalikon navigointia, jos asetusvalikko on aktiivinen
         else if (SceneManager.GetSceneByName("Menu").isLoaded && optionsMenu.activeSelf)
-        {   
-
+        {
             HandleOptionsMenuNavigation();
         }
+        // K‰sitell‰‰n HighScoreTable-ruutua
         else if (SceneManager.GetSceneByName("HighScoreTable").isLoaded)
         {
-            if (!backButtonHighlighted)
+            if (!isButtonHighlighted)
             {
                 HighlightButton(backButton);
-                backButtonHighlighted = true;
+                isButtonHighlighted = true;
             }
 
+            // Simuloidaan painikkeen painallus "Enter"-n‰pp‰imell‰
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 SimulateButtonClick();
             }
         }
-        if (SceneManager.GetSceneByName("GameOver").isLoaded && retryScreen != null && retryScreen.activeSelf)
+        else
         {
-            Debug.Log("Entered gameoverscene");
-            GameOverMenuControls gameOverMenu = FindObjectOfType<GameOverMenuControls>();
-            if (gameOverMenu != null)
-            {
-                gameOverMenu.HandleMainMenuNavigation();
-                HighlightButton(gameOverMenu.quitButton);
-            }
+            // Poistetaan painikkeen korostus
+            HighlightButton(null);
         }
-
     }
 
+    // K‰sitell‰‰n p‰‰valikon navigointia
     protected virtual void HandleMainMenuNavigation()
     {
+        if (!isButtonHighlighted)
+        {
+            HighlightButton(playButton);
+            isButtonHighlighted = true;
+        }
+
+        // K‰sitell‰‰n nuolin‰pp‰imien painalluksia
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            ChangeOption(MenuOption.Play, MenuOption.Exit, MenuOption.Options, MenuOption.Highscore);
+            ChangeOption(MenuOption.Exit, MenuOption.Options, MenuOption.Highscore, MenuOption.Play);
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            ChangeOption(MenuOption.Exit, MenuOption.Play, MenuOption.Highscore, MenuOption.Options);
-
+            ChangeOption(MenuOption.Highscore, MenuOption.Options, MenuOption.Exit, MenuOption.Play);
         }
+        // K‰sitell‰‰n "Enter"-n‰pp‰imen painallusta
         else if (Input.GetKeyDown(KeyCode.Return))
         {
+            isButtonHighlighted = false;
             SimulateButtonClick();
         }
     }
 
+    // K‰sitell‰‰n asetusvalikon navigointia
     protected virtual void HandleOptionsMenuNavigation()
     {
+        if (!isButtonHighlighted)
+        {
+            Debug.Log("isButtonHighlighted on kutsuttu");
+            HighlightButton(backButton);
+            isButtonHighlighted = true;
+        }
+
+        // K‰sitell‰‰n nuolin‰pp‰imien painalluksia
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            ChangeOption(MenuOption.Back, MenuOption.Volume, MenuOption.Resolution, MenuOption.Graphics, MenuOption.Fullscreen);
+            ChangeOption(MenuOption.Volume, MenuOption.Resolution, MenuOption.Graphics, MenuOption.Fullscreen, MenuOption.Back);
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             ChangeOption(MenuOption.Fullscreen, MenuOption.Graphics, MenuOption.Resolution, MenuOption.Volume, MenuOption.Back);
-
         }
+        // K‰sitell‰‰n "Enter"-n‰pp‰imen painallusta
         else if (Input.GetKeyDown(KeyCode.Return))
         {
+            isButtonHighlighted = false;
             SimulateButtonClick();
         }
     }
 
+    // Vaihdetaan nykyist‰ asetusta
     protected virtual void ChangeOption(params MenuOption[] options)
     {
         int index = Array.IndexOf(options, CurrentOption);
@@ -144,30 +141,35 @@ public class MenuControls : MonoBehaviour
             CurrentOption = options[(index + 1) % options.Length];
         }
 
+        // Korostetaan nykyinen painike
         HighlightButton(GetCurrentButton());
     }
 
+    // Korostetaan painike
     protected virtual void HighlightButton(GameObject button)
     {
-        Debug.Log("Highlighting: " + (button != null ? button.name : "null"));
-        highlightedButton = button;
+        Debug.Log("Korostetaan: " + (button != null ? button.name : "null"));
 
-        // Simulate mouse hover by selecting the button
+        // Asetetaan valittu peliobjekti korostetuksi
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(button);
     }
+
+    // Simuloidaan painikkeen painallus
     protected virtual void SimulateButtonClick()
     {
         Button buttonComponent = highlightedButton?.GetComponent<Button>();
         if (buttonComponent != null)
         {
+            // Kutsutaan painikkeen onClick-tapahtumaa
             buttonComponent.onClick.Invoke();
         }
         else
         {
-            Debug.LogError("The selected GameObject does not have a Button component.");
+            Debug.LogError("Valitulla peliobjektilla ei ole Button-komponenttia.");
         }
     }
 
+    // Palautetaan nykyinen painike nykyisen asetuksen perusteella
     protected virtual GameObject GetCurrentButton()
     {
         switch (CurrentOption)

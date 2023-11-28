@@ -4,86 +4,65 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static GameOverMenuControls;
 
-public class GmaeOver : MonoBehaviour
+public class GameOverControls : MonoBehaviour
 {
+    // Vaihtoehdot pelin loppumismenulle
     public enum GameOverMenuOption { Quit, Retry, MainMenu }
 
+    // Tämä property mahdollistaa nykyisen valinnan seuraamisen ja muuttamisen
     protected virtual GameOverMenuOption CurrentOption { get; set; }
-    // MenuOption
 
-    public GameObject quitButton;
-    public GameObject retryButton;
-    public GameObject mainMenuButton;
+    // Pelin loppumismenun vaihtoehdot
+    public GameObject quitButton;       // Lopeta-nappi
+    public GameObject retryButton;      // Yritä uudelleen -nappi
+    public GameObject mainMenuButton;   // Päävalikko-nappi
 
-    private GameObject highlightedButton;
+    private GameObject highlightedButton;  // Valittu nappi
 
-    /*private bool playButtonHighlighted = false;
-    private bool isbackButtonLoaded = false;*/
-    private bool isGameOverSceneLoaded = false;
-    private bool backButtonHighlighted = false;
+    public GameObject retryScreen;      // Yritä uudelleen -näyttö
 
+    private bool isButtonHighlighted = false;  // Onko nappi korostettu
 
-
-    protected virtual void SetCurrentOption(GameOverMenuOption option)
-    {
-        CurrentOption = option;
-    }
-
-    private GameObject retryScreen;
-
+    // Alustetaan nykyinen vaihtoehto Yritä uudelleen -napille
     protected virtual void Start()
     {
         CurrentOption = GameOverMenuOption.Retry;
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "GameOver")
-        {
-            retryScreen = GameObject.Find("RetryScreen");
-            isGameOverSceneLoaded = true;
-        }
-        else
-        {
-            isGameOverSceneLoaded = false;
-        }
     }
 
+    // Päivitetään jatkuvasti loppumismenun näyttöä
     protected virtual void Update()
     {
-        if (SceneManager.GetSceneByName("GameOver").isLoaded && retryScreen != null && retryScreen.activeSelf)
+        if (retryScreen.activeSelf)
         {
-            Debug.Log("Entered gameoverscene");
-            GameOverMenuControls gameOverMenu = FindObjectOfType<GameOverMenuControls>();
-            if (gameOverMenu != null)
-            {
-                HandleMainMenuNavigation();
-                HighlightButton(gameOverMenu.quitButton);
-            }
+            HandleRetryMenuNavigation();
         }
-
     }
 
-    protected virtual void HandleMainMenuNavigation()
+    // Käsitellään navigointi Yritä uudelleen -valikossa
+    protected virtual void HandleRetryMenuNavigation()
     {
+        if (!isButtonHighlighted)
+        {
+            HighlightButton(retryButton);
+            isButtonHighlighted = true;
+        }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            ChangeOption(GameOverMenuOption.Quit, GameOverMenuOption.Retry, GameOverMenuOption.MainMenu);
+            ChangeOption(GameOverMenuOption.Quit, GameOverMenuOption.MainMenu, GameOverMenuOption.Retry);
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            ChangeOption(GameOverMenuOption.Retry, GameOverMenuOption.MainMenu, GameOverMenuOption.Quit);
-
+            ChangeOption(GameOverMenuOption.MainMenu, GameOverMenuOption.Quit, GameOverMenuOption.Retry);
         }
         else if (Input.GetKeyDown(KeyCode.Return))
         {
+            isButtonHighlighted = false;
             SimulateButtonClick();
         }
     }
-    
 
+    // Vaihdetaan nykyistä vaihtoehtoa
     protected virtual void ChangeOption(params GameOverMenuOption[] options)
     {
         int index = Array.IndexOf(options, CurrentOption);
@@ -99,14 +78,17 @@ public class GmaeOver : MonoBehaviour
         HighlightButton(GetCurrentButton());
     }
 
+    // Korostetaan nappi (simuloidaan hiiren liikettä)
     protected virtual void HighlightButton(GameObject button)
     {
-        Debug.Log("Highlighting: " + (button != null ? button.name : "null"));
+        Debug.Log("Korostetaan: " + (button != null ? button.name : "null"));
         highlightedButton = button;
 
-        // Simulate mouse hover by selecting the button
+        // Simuloidaan hiiren valintaa valitulla napilla
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(button);
     }
+
+    // Simuloidaan nappulan klikkausta
     protected virtual void SimulateButtonClick()
     {
         Button buttonComponent = highlightedButton?.GetComponent<Button>();
@@ -116,13 +98,14 @@ public class GmaeOver : MonoBehaviour
         }
         else
         {
-            Debug.LogError("The selected GameObject does not have a Button component.");
+            Debug.LogError("Valitulla GameObjectilla ei ole Button-komponenttia.");
         }
     }
 
+    // Palautetaan nykyinen valittu nappi
     protected virtual GameObject GetCurrentButton()
     {
-            switch (CurrentOption)
+        switch (CurrentOption)
         {
             case GameOverMenuOption.Quit:
                 return quitButton;

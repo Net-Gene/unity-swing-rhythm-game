@@ -6,13 +6,11 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 /// <summary>
 /// HiScore
 /// </summary>
 public class HiScore : MonoBehaviour
 {
-
     /// <summary>
     /// hiScoreTable
     /// </summary>
@@ -43,7 +41,6 @@ public class HiScore : MonoBehaviour
     /// </summary>
     HiScoreList hiScoreStore;
 
-
     /// <summary>
     /// instance
     /// </summary>
@@ -65,20 +62,21 @@ public class HiScore : MonoBehaviour
     /// </summary>
     void Start()
     {
+        // Asetetaan instanssi itseensä
         instance = this;
 
-
+        // Luetaan pistetaulukko
         hiScoreStore = ReadScore();
 
-
+        // Päivitetään pistetaulukko
         UpdateScoreBoard(hiScoreStore.HiScoreElementList);
 
+        // Näytetään pistetaulukko
         Instance.Show();
-
     }
 
     /// <summary>
-    /// Show Hiscore Board
+    /// Näytä pistetaulukko
     /// </summary>
     public void Show()
     {
@@ -86,158 +84,116 @@ public class HiScore : MonoBehaviour
     }
 
     /// <summary>
-    /// Hide Hiscore Board
+    /// Piilota pistetaulukko
     /// </summary>
     public void Hide()
     {
         hiScoreBoard.SetActive(false);
     }
 
-
     /// <summary>
-    /// UpdateScoreBoard
+    /// Päivitä pistetaulukko
     /// </summary>
-    /// <param name="aList"></param>
+    /// <param name="list"></param>
     void UpdateScoreBoard(List<HiScoreElement> list)
     {
-        foreach(Transform tf in hiScoreTable.transform)
+        // Tyhjennä vanhat pistetaulukon elementit
+        foreach (Transform tf in hiScoreTable.transform)
         {
-            Destroy(tf);
+            Destroy(tf.gameObject);
         }
 
-        
-        foreach(HiScoreElement el in list)
+        // Luo uudet pistetaulukon elementit annetun listan perusteella
+        foreach (HiScoreElement el in list)
         {
             GameObject newScore = GameObject.Instantiate(hiScoreElement, hiScoreTable.transform);
-            
+
+            // Aktivoi uusi pistetaulukon elementti
             newScore.SetActive(true);
 
+            // Aseta tekstin arvo annetun HiScoreElementin mukaiseksi
             newScore.GetComponent<Text>().text = el.Name + " " + el.Score;
         }
-
-
     }
 
-
     /// <summary>
-    /// Save
+    /// Tallenna uusi pistetulos
     /// </summary>
     /// <param name="name"></param>
     /// <param name="score"></param>
     public void Save(string name, float score)
     {
+        // Luo uusi HiScoreElement tallennettavalla tiedolla
         HiScoreElement newScoreElement = new HiScoreElement(name, score);
+
+        // Lisää uusi HiScoreElement pistetaulukkoon
         hiScoreStore.AddToList(newScoreElement);
 
+        // Tallenna pistetaulukko
         SaveScoreBoard(hiScoreStore);
 
+        // Piilota pistetaulukon syöttökenttä
         hiScoreInput.gameObject.SetActive(false);
 
+        // Päivitä pistetaulukko näytölle
         UpdateScoreBoard(hiScoreStore.HiScoreElementList);
     }
 
-    /*
     /// <summary>
-    /// ShowInputQuery
-    /// </summary>
-    /// <param name="score"></param>
-    public void ShowInputQuery(float scoreU)
-    {
-        GameObject hiScoreInput = GameObject.Find("SetHiScore");
-
-        if (hiScoreInput != null)
-        {
-            hiScoreInput.GetComponent<HiScoreInput>().score = scoreU;
-            hiScoreInput.SetActive(true);
-        }
-        else
-        {
-            Debug.LogError("HiScoreInput not found! Make sure the object name is correct.");
-        }
-        hiScoreInput.gameObject.SetActive(true);
-    }
-    */
-
-
-    /// <summary>
-    /// SaveScoreBoard
+    /// Tallenna pistetaulukko
     /// </summary>
     /// <param name="sb"></param>
     public void SaveScoreBoard(HiScoreList sb)
     {
-
+        // Tulosta tallennustiedoston polku debug-lokiin
         Debug.Log(Application.persistentDataPath + "/hiScoreData.dat");
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Open(Application.persistentDataPath + "/hiScoreData.dat",FileMode.OpenOrCreate);
 
-        // Serialize and write the HiScoreList to the file
+        // Luo uusi BinaryFormatter
+        BinaryFormatter bf = new BinaryFormatter();
+
+        // Avaa tai luo tiedosto tallennusta varten
+        FileStream file = File.Open(Application.persistentDataPath + "/hiScoreData.dat", FileMode.OpenOrCreate);
+
+        // Serialisoi ja kirjoita HiScoreList tiedostoon
         bf.Serialize(file, sb);
 
-        // Close the file stream
+        // Sulje tiedostovirta
         file.Close();
-
     }
 
-
     /// <summary>
-    /// ReadScore
+    /// Lue pistetaulukko tiedostosta
     /// </summary>
     /// <returns></returns>
     HiScoreList ReadScore()
+    {
+        // Alusta pistetaulukko
+        HiScoreList sb = null;
+
+        // Luo uusi BinaryFormatter
+        BinaryFormatter bf = new BinaryFormatter();
+
+        // Avaa tallennustiedosto
+        FileStream file = File.Open(Application.persistentDataPath + "/s002.save", FileMode.Open);
+
+        // Deserialisoi tiedostosta HiScoreList
+        sb = (HiScoreList)bf.Deserialize(file);
+
+        // Sulje tiedostovirta
+        file.Close();
+
+        // Jos pistetaulukkoa ei ole vielä olemassa, luo uusi ja tallenna se
+        sb = new HiScoreList();
+        sb.HiScoreElementList = new List<HiScoreElement>();
+        SaveScoreBoard(sb);
+
+        // Tulosta pistetaulukon sisältö debug-lokiin
+        Debug.Log("TULOSTETAAN PISTETTAULUKKO");
+        foreach (HiScoreElement e in sb.HiScoreElementList)
         {
-            HiScoreList sb = null;
-
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/s002.save", FileMode.Open);
-            sb = (HiScoreList)bf.Deserialize(file);
-            file.Close();
-            sb = new HiScoreList();
-            sb.HiScoreElementList = new List<HiScoreElement>();
-            SaveScoreBoard(sb);
-
-            Debug.Log("TULOSTETAAN PISTETTAULUKKO");
-            foreach (HiScoreElement e in sb.HiScoreElementList)
-                {
-                    Debug.Log(e.Name + " - " + e.Score);
-                }
-            return sb;
-            /*
-            if (File.Exists(Application.persistentDataPath + "/s002.save"))
-            {
-
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/s002.save", FileMode.Open);
-            sb = (HiScoreList)bf.Deserialize(file);
-            file.Close();
-
-            return sb;
-
+            Debug.Log(e.Name + " - " + e.Score);
         }
-        else
-        {
 
-
-            sb = new HiScoreList();
-            sb.HiScoreElementList = new List<HiScoreElement>();
-            sb.AddToList(new HiScoreElement("ABC", 15));
-            sb.AddToList(new HiScoreElement("CCC", 10));
-            sb.AddToList(new HiScoreElement("DDD", 5));
-            sb.AddToList(new HiScoreElement("EEE", 2));
-            sb.AddToList(new HiScoreElement("FFF", 200));
-            sb.AddToList(new HiScoreElement("GGG", 20));
-            sb.AddToList(new HiScoreElement("HHH", 1));
-            sb.AddToList(new HiScoreElement("III", 60));
-            sb.AddToList(new HiScoreElement("JJJ", 3));
-            sb.AddToList(new HiScoreElement("KKK", 7));
-            sb.AddToList(new HiScoreElement("LLL", 4));
-            SaveScoreBoard(sb);
-
-            Debug.Log("TULOSTETAAN PISTETTAULUKKO");
-            foreach (HiScoreElement e in sb.HiScoreElementList)
-            {
-                Debug.Log(e.Name + " - " + e.Score);
-            }
-            return sb;
-        }*/
+        return sb;
     }
 }

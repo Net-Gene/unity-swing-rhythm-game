@@ -1,27 +1,34 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 
-/// <summary>
-/// GameLogic
-/// </summary>
 public class GameLogic : MonoBehaviour
-{    
-    /// <summary>
-    /// time
-    /// </summary>
+{
     private float time;
-
     public static int score;
+    public TMP_Text gameScoreText;
+    public AnimationClip scoreChangeAnimationClip;
+    public Animation animation;
 
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.
-    /// </summary>
-    private void Start() 
+    private int currentScore;  // Nykyinen pistemäärä
+
+    private void Start()
     {
-
         time = Time.time;
+        currentScore = GameLogic.score;  // Alustetaan nykyinen pistemäärä pelin alussa
+    }
+
+    private void Update()
+    {
+        // Tarkista, onko pistemäärä muuttunut
+        if (currentScore != GameLogic.score)
+        {
+            // Käynnistä animaatio käyttäen AnimationClip:iä
+            animation.clip = scoreChangeAnimationClip;
+            animation.Play();
+        }
+
+        // Päivitä pistemääräteksti
+        gameScoreText.text = GameLogic.score.ToString();
     }
 }

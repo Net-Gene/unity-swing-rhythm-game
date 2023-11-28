@@ -8,9 +8,13 @@ using UnityEngine;
 [System.Serializable]
 public class HiScoreElement
 {
+    // Pelaajan nimi
     public string Name;
+
+    // Pistemäärä
     public float Score = GameLogic.score;
 
+    // Konstruktori
     public HiScoreElement(string name, float score)
     {
         Name = name;

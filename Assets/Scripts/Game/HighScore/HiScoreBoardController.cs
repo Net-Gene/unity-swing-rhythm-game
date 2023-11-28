@@ -53,17 +53,17 @@ public class HiScoreBoardController : MonoBehaviour
             return;
         }
 
-        
         // Poista kaikki huipputaulun lapsiobjektit.
         foreach (Transform tf in hiScoreTable.transform)
         {
             Destroy(tf.gameObject);
         }
-        
 
         // Luo uudet huipputulosobjektit annetun listan perusteella.
-        foreach (HiScoreElement el in list)
+        int numberOfScoresToShow = Mathf.Min(list.Count, 6); // Show a maximum of 6 scores
+        for (int i = 0; i < numberOfScoresToShow; i++)
         {
+            HiScoreElement el = list[i];
             GameObject newScore = Instantiate(hiScoreElement, hiScoreTable.transform);
             newScore.SetActive(true);
             newScore.GetComponent<Text>().text = el.Name + " " + el.Score;
