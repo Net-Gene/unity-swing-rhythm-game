@@ -3225,6 +3225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1917115042}
   - component: {fileID: 1917115041}
+  - component: {fileID: 1917115043}
   m_Layer: 0
   m_Name: ControlsScriptHolder
   m_TagString: Untagged
@@ -3239,7 +3240,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917115040}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f04312d804afe534891ed2ba896ef9a9, type: 3}
   m_Name: 
@@ -3273,6 +3274,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1917115043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917115040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e3ec87f573b6a54ea8f74fa334e3cd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quitButton: {fileID: 1302529972}
+  retryButton: {fileID: 2053086279}
+  mainMenuButton: {fileID: 1876757870}
 --- !u!1 &1923046691
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,4 +31,10 @@ public class MainMenu : MonoBehaviour
         // Lopettaa sovelluksen suorituksen
         Application.Quit();
     }
+
+    public void ArrowKeyUp()
+    {
+        Input.GetKeyDown(KeyCode.UpArrow);
+            }
+
 }

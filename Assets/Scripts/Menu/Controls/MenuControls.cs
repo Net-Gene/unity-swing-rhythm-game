@@ -28,9 +28,12 @@ public class MenuControls : MonoBehaviour
 
     private GameObject highlightedButton;
 
-    //private bool playButtonHighlighted = false;
-    private bool backButtonHighlighted = false;
+    /*private bool playButtonHighlighted = false;
+    private bool isbackButtonLoaded = false;*/
     private bool isGameOverSceneLoaded = false;
+    private bool backButtonHighlighted = false;
+
+
 
     protected virtual void SetCurrentOption(MenuOption option)
     {
@@ -62,9 +65,11 @@ public class MenuControls : MonoBehaviour
         if (SceneManager.GetSceneByName("Menu").isLoaded && mainMenu.activeSelf)
         {
             HandleMainMenuNavigation();
+
         }
         else if (SceneManager.GetSceneByName("Menu").isLoaded && optionsMenu.activeSelf)
-        {
+        {   
+
             HandleOptionsMenuNavigation();
         }
         else if (SceneManager.GetSceneByName("HighScoreTable").isLoaded)

@@ -7,6 +7,7 @@ public class GameOverMenuControls : MenuControls
 {
     public enum GameOverMenuOption { Quit, Retry, MainMenu }
 
+
     public GameObject quitButton;
     public GameObject retryButton;
     public GameObject mainMenuButton;
@@ -24,11 +25,13 @@ public class GameOverMenuControls : MenuControls
     protected override void HandleMainMenuNavigation()
     {
         base.HandleMainMenuNavigation();
+        /*
         if (!quitButtonHighlighted)
         {
             HighlightButton(quitButton);
             quitButtonHighlighted = true;
         }
+        */
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             ChangeOption((MenuOption)GameOverMenuOption.Quit, (MenuOption)GameOverMenuOption.MainMenu, (MenuOption)GameOverMenuOption.Retry);
