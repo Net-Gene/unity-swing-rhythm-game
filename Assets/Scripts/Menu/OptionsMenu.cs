@@ -65,9 +65,11 @@ public class OptionsMenu : MonoBehaviour
 
     public void SetQuality(int qualityIndex)
     {
+        Debug.Log(QualitySettings.GetQualityLevel().ToString());
         // Asetetaan pelilaadun taso
         QualitySettings.SetQualityLevel(qualityIndex);
     }
+
 
     public void SetFullscreen(bool isFullscreen)
     {
