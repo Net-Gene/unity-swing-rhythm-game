@@ -588,8 +588,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameScoreText: {fileID: 1709708913}
-  scoreChangeAnimationClip: {fileID: 0}
-  animation: {fileID: 0}
 --- !u!1 &875920170
 GameObject:
   m_ObjectHideFlags: 0
@@ -3339,8 +3337,8 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 2068857884}
   - {fileID: 1617666903}
   - {fileID: 622175681}
   - {fileID: 1586865787}
   - {fileID: 1431523133}
-  - {fileID: 2068857884}

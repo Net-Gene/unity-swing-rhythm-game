@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameLogic : MonoBehaviour
 {
@@ -12,12 +13,17 @@ public class GameLogic : MonoBehaviour
 
     private void Start()
     {
+        GameLogic.score = 0;
         currentScore = GameLogic.score;  // Alustetaan nykyinen pistemäärä pelin alussa
     }
 
     private void Update()
     {
+        // Käsittele Pause-valikon navigointia
+        if (SceneManager.GetSceneByName("Game").isLoaded)
+        {
+            gameScoreText.text = GameLogic.score.ToString();
+        }
         // Päivitä pistemääräteksti
-        gameScoreText.text = GameLogic.score.ToString();
     }
 }

@@ -78,12 +78,13 @@ public class MenuControls : MonoBehaviour
     // K‰sitell‰‰n p‰‰valikon navigointia
     protected virtual void HandleMainMenuNavigation()
     {
+        /*
         if (!isButtonHighlighted)
         {
             HighlightButton(playButton);
             isButtonHighlighted = true;
         }
-
+        */
         // K‰sitell‰‰n nuolin‰pp‰imien painalluksia
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -96,20 +97,29 @@ public class MenuControls : MonoBehaviour
         // K‰sitell‰‰n "Enter"-n‰pp‰imen painallusta
         else if (Input.GetKeyDown(KeyCode.Return))
         {
-            isButtonHighlighted = false;
+            /*
+            if (!mainMenu.activeSelf)
+            {
+                isButtonHighlighted = false;
+            }
+            */
             SimulateButtonClick();
+            
         }
+        
     }
 
     // K‰sitell‰‰n asetusvalikon navigointia
     protected virtual void HandleOptionsMenuNavigation()
     {
+        /*
         if (!isButtonHighlighted)
         {
             Debug.Log("isButtonHighlighted on kutsuttu");
             HighlightButton(backButton);
             isButtonHighlighted = true;
         }
+        */
 
         // K‰sitell‰‰n nuolin‰pp‰imien painalluksia
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -123,9 +133,15 @@ public class MenuControls : MonoBehaviour
         // K‰sitell‰‰n "Enter"-n‰pp‰imen painallusta
         else if (Input.GetKeyDown(KeyCode.Return))
         {
-            isButtonHighlighted = false;
-            SimulateButtonClick();
+            SimulateButtonClick();     
+            /*
+            if (!optionsMenu.activeSelf)
+            {
+                isButtonHighlighted = false;
+            }
+            */
         }
+
     }
 
     // Vaihdetaan nykyist‰ asetusta

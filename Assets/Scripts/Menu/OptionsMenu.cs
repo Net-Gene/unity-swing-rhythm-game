@@ -15,6 +15,11 @@ public class OptionsMenu : MonoBehaviour
 
     private void Start()
     {
+        QualitySettings.SetQualityLevel(2);
+
+        Screen.SetResolution(1920, 1080, Screen.fullScreen);
+
+        /*
         // Haetaan laitteen tukemat resoluutiot
         resolutions = Screen.resolutions;
 
@@ -45,6 +50,7 @@ public class OptionsMenu : MonoBehaviour
 
         // Asetetaan valittu arvo valintapudotusvalikkoon nykyisen resoluution perusteella
         resolutionDropdowns.value = currentResolutionIndex;
+        */
 
         // P?ivitet??n n?ytetty valinta
         resolutionDropdowns.RefreshShownValue();
@@ -67,13 +73,16 @@ public class OptionsMenu : MonoBehaviour
     {
         Debug.Log(QualitySettings.GetQualityLevel().ToString());
         // Asetetaan pelilaadun taso
-        QualitySettings.SetQualityLevel(qualityIndex);
+        //        QualitySettings.SetQualityLevel(qualityIndex);
+
+        Debug.Log(QualitySettings.GetQualityLevel().ToString());
+
     }
 
 
     public void SetFullscreen(bool isFullscreen)
     {
-        // Asetetaan koko n?yt?n tila
-        Screen.fullScreen = isFullscreen;
+        // Toggle the fullscreen state
+        Screen.fullScreen = !Screen.fullScreen;
     }
 }
