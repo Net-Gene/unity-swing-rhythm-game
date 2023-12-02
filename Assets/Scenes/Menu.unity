@@ -3598,6 +3598,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e682302ff6499d044a95c52b50c4ef3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  passwordInputField: {fileID: 0}
+  passwordTextComponent: {fileID: 0}
+  highScoreTable: {fileID: 0}
+  passwordObject: {fileID: 0}
 --- !u!1 &791747554
 GameObject:
   m_ObjectHideFlags: 0
@@ -4755,7 +4759,7 @@ Camera:
     height: 1
   near clip plane: 1
   far clip plane: 458.17
-  field of view: 102.11217
+  field of view: 103.34471
   orthographic: 0
   orthographic size: 5
   m_Depth: 1

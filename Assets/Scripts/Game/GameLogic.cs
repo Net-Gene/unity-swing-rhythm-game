@@ -13,7 +13,13 @@ public class GameLogic : MonoBehaviour
 
     private void Start()
     {
-        GameLogic.score = 0;
+        // Check if the scene named "game" is active and enabled
+        Scene gameScene = SceneManager.GetSceneByName("Game");
+        if (gameScene.isLoaded)
+        {
+            GameLogic.score = 0;
+        }
+
         currentScore = GameLogic.score;  // Alustetaan nykyinen pistemäärä pelin alussa
     }
 
