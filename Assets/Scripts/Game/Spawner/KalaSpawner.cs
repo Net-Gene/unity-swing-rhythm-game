@@ -6,11 +6,13 @@ using UnityEngine;
 public class KalaSpawner : MonoBehaviour
 {
     public GameObject kalanPrefab; // Kalan esiprefab, joka spawnerataan
-    private float spawnIntervalMin = 5f; // Lyhin aika tukin spawnerauksen välillä
-    private float spawnIntervalMax = 6f; // Pisin aika tukin spawnerauksen välillä
+    private float spawnIntervalMin = 4f; // Lyhin aika tukin spawnerauksen välillä
+    private float spawnIntervalMax = 5f; // Pisin aika tukin spawnerauksen välillä
 
     private float timeSinceLastSpawn; // Aika viimeisestä spawnerauksesta
     private float currentSpawnInterval; // Nykyinen aika seuraavaan spawneraukseen
+
+    private float milestone = 50f;
 
     void Start()
     {
@@ -19,6 +21,14 @@ public class KalaSpawner : MonoBehaviour
 
     void Update()
     {
+        if (milestone < GameLogic.score)
+        {
+            spawnIntervalMin = spawnIntervalMin * 0.75f;
+            spawnIntervalMax = spawnIntervalMax * 0.75f;
+            milestone += 50;
+        }
+
+
         timeSinceLastSpawn += Time.deltaTime; // Laske kulunut aika viimeisestä spawnerauksesta
 
         if (timeSinceLastSpawn >= currentSpawnInterval)

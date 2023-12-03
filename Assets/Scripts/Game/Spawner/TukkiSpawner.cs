@@ -12,6 +12,8 @@ public class TukkiSpawner : MonoBehaviour
     private float timeSinceLastSpawn; // Aika viimeisestä spawnerauksesta
     private float currentSpawnInterval; // Nykyinen aika seuraavaan spawneraukseen
 
+    private float milestone = 50f;
+
     void Start()
     {
         currentSpawnInterval = Random.Range(spawnIntervalMin, spawnIntervalMax); // Aseta satunnainen aika seuraavalle spawneraukselle
@@ -19,6 +21,13 @@ public class TukkiSpawner : MonoBehaviour
 
     void Update()
     {
+        if (milestone < GameLogic.score)
+        {
+            spawnIntervalMin = spawnIntervalMin * 0.75f;
+            spawnIntervalMax = spawnIntervalMax * 0.75f;
+            milestone += 50;
+        }
+
         timeSinceLastSpawn += Time.deltaTime; // Laske kulunut aika viimeisestä spawnerauksesta
 
         if (timeSinceLastSpawn >= currentSpawnInterval)
