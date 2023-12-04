@@ -15,7 +15,7 @@ public class Majava : MonoBehaviour
     // Tera-peliobjekti ja tuhoet�isyys
     private Transform tera;
 
-    private float tuhoetaisyys = 1.0f;
+    private float tuhoetaisyys = 2.0f;
 
     // Muuttuja, joka tallentaa ter�n nimen
     private string teranNimi = "Tera";

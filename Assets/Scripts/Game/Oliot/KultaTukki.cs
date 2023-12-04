@@ -1,30 +1,29 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-public class Saukko : MonoBehaviour
+public class KultaTukki : MonoBehaviour
 {
     // Korkeus, jossa tukki poistetaan
     private float despawnKorkeus = -10f;
 
     // Tukin liikkumisnopeus
-    private float nopeus = 5f;
+    private float nopeus = 8f;
 
     // Tera-peliobjekti ja tuhoet�isyys
     private Transform tera;
 
-    private float tuhoetaisyys = 2.0f;
+    private float tuhoetaisyys = 1.0f;
 
     // Muuttuja, joka tallentaa ter�n nimen
     private string teranNimi = "Tera";
 
-
     private void Update()
     {
-        // Liikutetaan objektia eteenp�in nopeuden verran
-        transform.Translate(Vector3.down * nopeus * Time.deltaTime);
+        // Liikutetaan objektia taaksep�in nopeuden verran
+        transform.Translate(Vector3.back * nopeus * Time.deltaTime);
 
         // Etsit��n ter�-objekti dynaamisesti sen nimen perusteella
         if (tera == null)
@@ -42,39 +41,30 @@ public class Saukko : MonoBehaviour
             }
         }
 
-        // Lasketaan et�isyys kalan ja ter�n v�lill�
-        float etaisyys = Vector3.Distance(transform.position, tera.transform.position);
+        // Lasketaan et�isyys tukin ja ter�n v�lill�
+        float etaisyys = Vector3.Distance(transform.position, tera.position);
+
         // Tarkistetaan, onko et�isyys alle tuhoet�isyyden ja tarkistetaan y-akseli
         if (etaisyys < tuhoetaisyys)
         {
-            // Kala tuhoutuu
+            // Tukki tuhoutuu
             Destroy(gameObject);
 
-            // Lis�tt�v�t pisteet
-            int value = 200;
-            GameLogic.score -= value;
-            // Tulostetaan pisteet konsoliin
-            Debug.Log("Pisteet: " + GameLogic.score);
-
-            // Tulostetaan peli p��ttyneeksi
-            Debug.Log("Game Over");
-
-            // Siirryt��n seuraavaan pelisceneen
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
-
-        // Kala despawnaa, Jos se saavuttaa m��ritetyn korkeuden
-        if (transform.position.z <= despawnKorkeus)
-        {
-            // Kala tuhoutuu
-            Destroy(gameObject);
-
-            // Lis�tt�v�t pisteet
-            int value = 200;
+            // Lasketaan pisteet pelilogiikan perusteella
+            int value = 30;
             GameLogic.score += value;
 
+
+
             // Tulostetaan pisteet konsoliin
             Debug.Log("Pisteet: " + GameLogic.score);
+        }
+
+        // Jos tukki saavuttaa m��ritetyn korkeuden, peli p��ttyy
+        if (transform.position.z <= despawnKorkeus)
+        {
+            // Tukki tuhoutuu
+            Destroy(gameObject);
         }
     }
 }

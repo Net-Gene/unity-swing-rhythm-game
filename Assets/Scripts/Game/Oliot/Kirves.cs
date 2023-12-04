@@ -15,13 +15,15 @@ public class Kirves : MonoBehaviour
     private Vector3 kaistaC = new Vector3(3f, 1.1f, -7.55f);
 
     // Liikkumisnopeus
-    public float liikkumisNopeus = 15f;
+    private float liikkumisNopeus = 15f;
 
     // Lyönnin animaation aika
-    public float lyonninAika = 1.1f;
+    private float lyonninAika = 1.1f;
 
     private Vector3 kohdeSijainti; // Tavoitesijainti liikkumista varten
     private bool lyontiKaynnissa = false; // Onko lyönti käynnissä
+
+    private bool speedboost = false;
 
     // Alustetaan keskimmäinen kaista alkukaistaksi
     void Start()
@@ -38,6 +40,16 @@ public class Kirves : MonoBehaviour
             LiikuKirvesta();
             VaihdaKaistaa();
             LyoKirveella();
+        }
+
+        if(speedboost == false)
+        {
+            if (GameLogic.score >= 200)
+            {
+                liikkumisNopeus = 20f;
+                lyonninAika = 0.7f;
+                speedboost = true;
+            }
         }
     }
 
