@@ -3133,6 +3133,7 @@ GameObject:
   - component: {fileID: 2068673255}
   - component: {fileID: 2068673254}
   - component: {fileID: 2068673249}
+  - component: {fileID: 2068673257}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -3278,6 +3279,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kalanPrefab: {fileID: 2663717245614960649, guid: b1a2285fb43d60b48a80fcba73172f73, type: 3}
+--- !u!114 &2068673257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068673248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82318845bb000d4eb0b32f1ebdca57b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tukinPrefab: {fileID: 0}
 --- !u!1 &2068857883
 GameObject:
   m_ObjectHideFlags: 0
