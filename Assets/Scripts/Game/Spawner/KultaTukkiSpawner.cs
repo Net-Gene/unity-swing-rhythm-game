@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class KultaTukkiSpawner : MonoBehaviour
 {
-    public GameObject tukinPrefab; // Tukin esiprefab, joka spawnerataan
+    public GameObject kultaTukinPrefab; // Tukin esiprefab, joka spawnerataan
     private float spawnIntervalMin = 10f; // Lyhin aika tukin spawnerauksen välillä
     private float spawnIntervalMax = 16f; // Pisin aika tukin spawnerauksen välillä
 
@@ -21,7 +21,7 @@ public class KultaTukkiSpawner : MonoBehaviour
 
     void Update()
     {
-        if (milestone < GameLogic.score)
+        if (milestone < GameLogic.score && milestone < 400)
         {
             spawnIntervalMin = spawnIntervalMin * 0.75f;
             spawnIntervalMax = spawnIntervalMax * 0.75f;
@@ -56,14 +56,14 @@ public class KultaTukkiSpawner : MonoBehaviour
             kaista = OtettuSijainti(kaista);
             Vector3 spawnSijainti = CalculateSpawnPosition(kaista); // Lasketaan spawnerin sijainti valitun kaistan perusteella
 
-            GameObject tukki = Instantiate(tukinPrefab, spawnSijainti, Quaternion.identity); // Luo tukki spawnerin sijaintiin
+            GameObject tukki = Instantiate(kultaTukinPrefab, spawnSijainti, Quaternion.identity); // Luo tukki spawnerin sijaintiin
             SpawnManager.kaistaKirjain = kaista;
         }
         else
         {
             Vector3 spawnSijainti = CalculateSpawnPosition(kaista); // Lasketaan spawnerin sijainti valitun kaistan perusteella
 
-            GameObject tukki = Instantiate(tukinPrefab, spawnSijainti, Quaternion.identity); // Luo tukki spawnerin sijaintiin
+            GameObject tukki = Instantiate(kultaTukinPrefab, spawnSijainti, Quaternion.identity); // Luo tukki spawnerin sijaintiin
             SpawnManager.kaistaKirjain = kaista;
         }
     }

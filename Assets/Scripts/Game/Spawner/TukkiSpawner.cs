@@ -21,7 +21,7 @@ public class TukkiSpawner : MonoBehaviour
 
     void Update()
     {
-        if (milestone < GameLogic.score)
+        if (milestone < GameLogic.score && milestone < 400)
         {
             spawnIntervalMin = spawnIntervalMin * 0.75f;
             spawnIntervalMax = spawnIntervalMax * 0.75f;

@@ -62,15 +62,15 @@ public class Kirves : MonoBehaviour
     // Vaihtaa kaistaa numeronäppäimillä 1-3
     void VaihdaKaistaa()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             AsetaKaista("A");
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.S))
         {
             AsetaKaista("B");
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.D))
         {
             AsetaKaista("C");
         }

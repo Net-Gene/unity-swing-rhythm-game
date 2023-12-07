@@ -154,7 +154,7 @@ Transform:
   m_GameObject: {fileID: 2663717245614960649}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -1.54, y: 2.42, z: -5.27}
+  m_LocalPosition: {x: 0, y: 2.42, z: -5027}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -229,12 +229,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05297f1b0071a2a4f970f518a0da6c36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialSpawnIntervalMin: 6
-  initialSpawnIntervalMax: 5
-  despawnKorkeus: -10
-  tera: {fileID: 859910347201675858, guid: e008f1d2de728d043a17954845068102, type: 3}
-  tuhoetaisyys: 5
-  teranNimi: Tera
 --- !u!1 &2860454138151483864
 GameObject:
   m_ObjectHideFlags: 0

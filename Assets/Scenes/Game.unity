@@ -3234,7 +3234,7 @@ Transform:
   m_GameObject: {fileID: 2068673248}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.21, z: 21}
+  m_LocalPosition: {x: 0, y: -3.21, z: 44.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3291,7 +3291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82318845bb000d4eb0b32f1ebdca57b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tukinPrefab: {fileID: 0}
+  kultaTukinPrefab: {fileID: 3447231911861604328, guid: bb78a20acfb64ef43b33d429cd15644e, type: 3}
 --- !u!1 &2068857883
 GameObject:
   m_ObjectHideFlags: 0
