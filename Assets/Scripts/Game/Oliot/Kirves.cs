@@ -25,11 +25,7 @@ public class Kirves : MonoBehaviour
 
     private bool speedboost = false;
 
-    // Alustetaan keskimmäinen kaista alkukaistaksi
-    void Start()
-    {
-        AsetaKaista("B");
-    }
+
 
     // Päivitetään joka frame
     void Update()
@@ -42,7 +38,7 @@ public class Kirves : MonoBehaviour
             LyoKirveella();
         }
 
-        if(speedboost == false)
+        if (speedboost == false)
         {
             if (GameLogic.score >= 200)
             {
@@ -51,6 +47,7 @@ public class Kirves : MonoBehaviour
                 speedboost = true;
             }
         }
+
     }
 
     // Liikuttaa kirvestä kohti tavoitesijaintia
@@ -59,20 +56,36 @@ public class Kirves : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, kohdeSijainti, liikkumisNopeus * Time.deltaTime);
     }
 
-    // Vaihtaa kaistaa numeronäppäimillä 1-3
+    // Nykyinen valittu kaista
+    string nykyinenKaista = "B";
+
     void VaihdaKaistaa()
     {
+        // Käsittele kosketustapahtumat
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                // Kosketus alkoi
+                if (touch.position.x < Screen.width / 2)
+                {
+                    AsetaSeuraavaKaistaVasenmalle();
+                }
+                else
+                {
+                    AsetaSeuraavakaistaOikealle();
+                }
+            }
+        }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            AsetaKaista("A");
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            AsetaKaista("B");
+            AsetaSeuraavaKaistaVasenmalle();
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            AsetaKaista("C");
+            AsetaSeuraavakaistaOikealle();
         }
     }
 
@@ -82,24 +95,93 @@ public class Kirves : MonoBehaviour
         if (kaista == "A")
         {
             kohdeSijainti = kaistaA;
+            nykyinenKaista = "A";
         }
         else if (kaista == "B")
         {
             kohdeSijainti = kaistaB;
+            nykyinenKaista = "B";
         }
         else if (kaista == "C")
         {
             kohdeSijainti = kaistaC;
+            nykyinenKaista = "C";
         }
     }
 
-    // Käynnistää lyöntianimaation välilyönnillä (Space)
+    // Valitsee seuraavan kaistan järjestetyssä tilassa (A, B, C, C, B, A...)
+    void AsetaSeuraavakaistaOikealle()
+    {
+        if (nykyinenKaista == "A")
+        {
+            AsetaKaista("B");
+        }
+        else if (nykyinenKaista == "B")
+        {
+            AsetaKaista("C");
+        }
+    }
+
+    // Valitsee seuraavan kaistan järjestetyssä tilassa (C, B, A)
+    void AsetaSeuraavaKaistaVasenmalle()
+    {
+        if (nykyinenKaista == "C")
+        {
+            AsetaKaista("B");
+        }
+        else if (nykyinenKaista == "B")
+        {
+            AsetaKaista("A");
+        }
+    }
+
+    private Quaternion initialOrientation;
+
+    // Alustetaan keskimmäinen kaista alkukaistaksi
+    void Start()
+    {
+        AsetaKaista("B");
+
+        // Check if gyro is available
+        if (SystemInfo.supportsGyroscope)
+        {
+            Input.gyro.enabled = true; // Enable the gyro
+                                       // Store the initial orientation of the device
+            initialOrientation = Input.gyro.attitude;
+        }
+        else
+        {
+            Debug.LogError("Gyro is not supported on this device.");
+        }
+    }
+
+    // Käynnistää lyöntianimaation välilyönnillä (Space) tai kun puhelin on palautettu alkuperäiseen asentoon
     void LyoKirveella()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        // Check if the phone is in the original orientation
+        if (IsPhoneInOriginalOrientation() || (Input.GetKeyDown(KeyCode.Space)))
         {
             StartCoroutine(LyoAnimaatio());
         }
+    }
+
+    // Tarkistaa, onko puhelin alkuperäisessä asennossa
+    bool IsPhoneInOriginalOrientation()
+    {
+        // Use gyro data to check if the current orientation is close to the initial orientation
+        Quaternion currentOrientation = Input.gyro.attitude;
+
+        // Extract the Z angles for comparison
+        float initialZAngle = initialOrientation.eulerAngles.z;
+        float currentZAngle = currentOrientation.eulerAngles.z;
+
+        // Calculate the absolute difference in Z angles
+        float angleDifference = Mathf.Abs(Mathf.DeltaAngle(currentZAngle, initialZAngle));
+
+        // Adjust the threshold based on your preference for how much Z angle change is required
+        float zAngleThreshold = 5f;
+
+        return angleDifference < zAngleThreshold;
     }
 
     // Suorittaa lyöntianimaation Coroutine-na (animaation viiveet ym.)

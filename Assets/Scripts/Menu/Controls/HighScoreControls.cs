@@ -35,15 +35,15 @@ public class HighScoreControls : MonoBehaviour
     // K‰sitell‰‰n navigointi Yrit‰ uudelleen -valikossa
     protected virtual void HandleHighScoreMenuNavigation()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) || GameLogic.CheckSwipeUpOnAndroid())
         {
             ChangeOption(HighScoreMenuOption.Reset, HighScoreMenuOption.Back);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || GameLogic.CheckSwipeDownOnAndroid())
         {
             ChangeOption(HighScoreMenuOption.Reset, HighScoreMenuOption.Back);
         }
-        else if (Input.GetKeyDown(KeyCode.Return))
+        else if (Input.GetKeyDown(KeyCode.Return) || GameLogic.CheckTapOnAndroid())
         {
             SimulateButtonClick();
         }

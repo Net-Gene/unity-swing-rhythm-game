@@ -17,7 +17,10 @@ public class OptionsMenu : MonoBehaviour
     {
         QualitySettings.SetQualityLevel(2);
 
-        Screen.SetResolution(1920, 1080, Screen.fullScreen);
+        // Set the resolution to the device's preferences
+        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, Screen.fullScreen);
+
+        //Screen.SetResolution(1920, 1080, Screen.fullScreen);
 
         /*
         // Haetaan laitteen tukemat resoluutiot

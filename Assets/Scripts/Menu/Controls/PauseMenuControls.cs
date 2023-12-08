@@ -51,17 +51,17 @@ public class PauseMenuControls : MonoBehaviour
             isButtonHighlighted = true;
         }
 
-        // Vaihda valintaa ylös- ja alasnuolinäppäimillä
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        // Vaihda valintaa ylös- ja alasnuolinäppäimillä tai kosketuksella Androidilla
+        if (Input.GetKeyDown(KeyCode.UpArrow) || GameLogic.CheckSwipeUpOnAndroid())
         {
             ChangeOption(PauseMenuOption.Quit, PauseMenuOption.Menu, PauseMenuOption.Resume);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || GameLogic.CheckSwipeDownOnAndroid())
         {
             ChangeOption(PauseMenuOption.Menu, PauseMenuOption.Quit, PauseMenuOption.Resume);
         }
-        // Simuloi napin painallus Enter-näppäimellä
-        else if (Input.GetKeyDown(KeyCode.Return))
+        // Simuloi napin painallus Enter-näppäimellä tai kosketuksella Androidilla
+        else if (Input.GetKeyDown(KeyCode.Return) || GameLogic.CheckTapOnAndroid())
         {
             isButtonHighlighted = false;
             SimulateButtonClick();

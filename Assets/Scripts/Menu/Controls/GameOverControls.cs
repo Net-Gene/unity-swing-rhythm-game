@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static GameOverControls;
 
 public class GameOverControls : MonoBehaviour
 {
@@ -47,20 +48,24 @@ public class GameOverControls : MonoBehaviour
             HighlightButton(retryButton);
             isButtonHighlighted = true;
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+
+        if (Input.GetKeyDown(KeyCode.UpArrow) || GameLogic.CheckSwipeUpOnAndroid())
         {
             ChangeOption(GameOverMenuOption.Quit, GameOverMenuOption.MainMenu, GameOverMenuOption.Retry);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || GameLogic.CheckSwipeDownOnAndroid())
         {
             ChangeOption(GameOverMenuOption.MainMenu, GameOverMenuOption.Quit, GameOverMenuOption.Retry);
         }
-        else if (Input.GetKeyDown(KeyCode.Return))
+        else if (Input.GetKeyDown(KeyCode.Return) || GameLogic.CheckTapOnAndroid())
         {
             isButtonHighlighted = false;
             SimulateButtonClick();
         }
     }
+
+    
+
 
     // Vaihdetaan nykyistä vaihtoehtoa
     protected virtual void ChangeOption(params GameOverMenuOption[] options)

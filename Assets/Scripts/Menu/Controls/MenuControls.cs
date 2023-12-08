@@ -62,8 +62,8 @@ public class MenuControls : MonoBehaviour
                 isButtonHighlighted = true;
             }
 
-            // Simuloidaan painikkeen painallus "Enter"-n‰pp‰imell‰
-            if (Input.GetKeyDown(KeyCode.Return))
+            // Simuloidaan painikkeen painallus "Enter"-n‰pp‰imell‰ tai kosketusn‰ytˆn napautuksella Androidilla
+            if (Input.GetKeyDown(KeyCode.Return) || GameLogic.CheckTapOnAndroid())
             {
                 SimulateButtonClick();
             }
@@ -78,70 +78,39 @@ public class MenuControls : MonoBehaviour
     // K‰sitell‰‰n p‰‰valikon navigointia
     protected virtual void HandleMainMenuNavigation()
     {
-        /*
-        if (!isButtonHighlighted)
-        {
-            HighlightButton(playButton);
-            isButtonHighlighted = true;
-        }
-        */
-        // K‰sitell‰‰n nuolin‰pp‰imien painalluksia
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        // K‰sitell‰‰n nuolin‰pp‰imien painalluksia tai pyyhk‰isyt Androidilla
+        if (Input.GetKeyDown(KeyCode.UpArrow) || GameLogic.CheckSwipeUpOnAndroid())
         {
             ChangeOption(MenuOption.Exit, MenuOption.Options, MenuOption.Highscore, MenuOption.Play);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || GameLogic.CheckSwipeDownOnAndroid())
         {
             ChangeOption(MenuOption.Highscore, MenuOption.Options, MenuOption.Exit, MenuOption.Play);
         }
-        // K‰sitell‰‰n "Enter"-n‰pp‰imen painallusta
-        else if (Input.GetKeyDown(KeyCode.Return))
+        // K‰sitell‰‰n "Enter"-n‰pp‰imen painallusta tai kosketusn‰ytˆn napautusta Androidilla
+        else if (Input.GetKeyDown(KeyCode.Return) || GameLogic.CheckTapOnAndroid())
         {
-            /*
-            if (!mainMenu.activeSelf)
-            {
-                isButtonHighlighted = false;
-            }
-            */
             SimulateButtonClick();
-            
         }
-        
     }
 
     // K‰sitell‰‰n asetusvalikon navigointia
     protected virtual void HandleOptionsMenuNavigation()
     {
-        /*
-        if (!isButtonHighlighted)
-        {
-            Debug.Log("isButtonHighlighted on kutsuttu");
-            HighlightButton(backButton);
-            isButtonHighlighted = true;
-        }
-        */
-
-        // K‰sitell‰‰n nuolin‰pp‰imien painalluksia
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        // K‰sitell‰‰n nuolin‰pp‰imien painalluksia tai pyyhk‰isyt Androidilla
+        if (Input.GetKeyDown(KeyCode.UpArrow) || GameLogic.CheckSwipeUpOnAndroid())
         {
             ChangeOption(MenuOption.Volume, MenuOption.Resolution, MenuOption.Graphics, MenuOption.Fullscreen, MenuOption.Back);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || GameLogic.CheckSwipeDownOnAndroid())
         {
             ChangeOption(MenuOption.Fullscreen, MenuOption.Graphics, MenuOption.Resolution, MenuOption.Volume, MenuOption.Back);
         }
-        // K‰sitell‰‰n "Enter"-n‰pp‰imen painallusta
-        else if (Input.GetKeyDown(KeyCode.Return))
+        // K‰sitell‰‰n "Enter"-n‰pp‰imen painallusta tai kosketusn‰ytˆn napautusta Androidilla
+        else if (Input.GetKeyDown(KeyCode.Return) || GameLogic.CheckTapOnAndroid())
         {
-            SimulateButtonClick();     
-            /*
-            if (!optionsMenu.activeSelf)
-            {
-                isButtonHighlighted = false;
-            }
-            */
+            SimulateButtonClick();
         }
-
     }
 
     // Vaihdetaan nykyist‰ asetusta

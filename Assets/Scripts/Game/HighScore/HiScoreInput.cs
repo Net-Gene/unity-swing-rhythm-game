@@ -64,23 +64,22 @@ public class HiScoreInput : MonoBehaviour
     void Update()
     {
 
-        if (UnityEngine.Input.GetKeyDown(KeyCode.LeftArrow))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.LeftArrow) || GameLogic.CheckSwipeLeftOnAndroid())
             PrevLetter();
 
-
-        if (UnityEngine.Input.GetKeyDown(KeyCode.RightArrow))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.RightArrow) || GameLogic.CheckSwipeRightOnAndroid())
             NextLetter();
 
-        if (UnityEngine.Input.GetKeyDown(KeyCode.UpArrow))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.UpArrow) || GameLogic.CheckSwipeUpOnAndroid())
             NextAlphaBet();
 
-        if (UnityEngine.Input.GetKeyDown(KeyCode.DownArrow))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.DownArrow) || GameLogic.CheckSwipeDownOnAndroid())
             PrevAlphaBet();
 
-
-        if (UnityEngine.Input.GetKeyDown(KeyCode.Return)) {
-            HiScoreInputController.Instance.Save(listOfLetters[0].GetComponent<Text>().text 
-                + listOfLetters[1].GetComponent<Text>().text + 
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Return) || GameLogic.CheckTapOnAndroid())
+        {
+            HiScoreInputController.Instance.Save(listOfLetters[0].GetComponent<Text>().text
+                + listOfLetters[1].GetComponent<Text>().text +
                 listOfLetters[2].GetComponent<Text>().text, GameLogic.score);
 
             // Activate and deactivate GameObjects
