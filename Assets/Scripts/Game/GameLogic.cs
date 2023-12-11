@@ -7,7 +7,6 @@ public class GameLogic : MonoBehaviour
 {
     public static int score;
     public TMP_Text gameScoreText;
- 
 
     private int currentScore;  // Nykyinen pistemäärä
 
@@ -84,7 +83,34 @@ public class GameLogic : MonoBehaviour
         if (SceneManager.GetSceneByName("Game").isLoaded)
         {
             gameScoreText.text = GameLogic.score.ToString();
+            // Päivitä pistemääräteksti
+            if (currentScore != GameLogic.score)
+            {
+                // Score has changed, trigger animator or any other action
+                StartCoroutine(PlayScoreChangeAnimation());
+                currentScore = GameLogic.score; // Update current score
+            }
         }
-        // Päivitä pistemääräteksti
+    }
+
+    IEnumerator PlayScoreChangeAnimation()
+    {
+        Debug.Log("PlayScoreChangeAnimation has been called");
+        // Assuming you have an Animator component attached to the same GameObject
+        Animator animator = GetComponent<Animator>();
+
+        if (animator != null)
+        {
+            // Trigger your animator parameter named "ScoreChanged" (change it to your actual parameter name)
+            animator.SetTrigger("ScoreChangeAnimator");
+
+            // Wait for the animation to finish (you can adjust the time accordingly)
+            yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        }
+        else
+        {
+            Debug.Log("animator is null");
+
+        }
     }
 }

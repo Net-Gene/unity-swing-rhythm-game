@@ -89,3 +89,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c20393674607a4351a348253517182d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FloatingPoints: {fileID: 6197464392215598744, guid: b9e0726fa981d884186e9e30e48d9753, type: 3}

@@ -20,6 +20,7 @@ public class Kala : MonoBehaviour
     // Muuttuja, joka tallentaa ter�n nimen
     private string teranNimi = "Tera";
 
+    public GameObject FloatingPoints;
 
     private void Update()
     {
@@ -35,11 +36,6 @@ public class Kala : MonoBehaviour
             {
                 tera = teraObj.transform;
             }
-            else
-            {
-                Debug.LogError("Tera-objektia ei l�ytynyt. Tarkista nimi ja varmista, ett� se on aktiivinen.");
-                return;
-            }
         }
 
         // Lasketaan et�isyys kalan ja ter�n v�lill�
@@ -49,6 +45,9 @@ public class Kala : MonoBehaviour
         {
             // Kala tuhoutuu
             Destroy(gameObject);
+
+            // Floating points txt spawn when game object is destroyed
+            Instantiate(FloatingPoints, new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
 
             // Lis�tt�v�t pisteet
             int value = 15;

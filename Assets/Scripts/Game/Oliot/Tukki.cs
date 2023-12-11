@@ -20,6 +20,8 @@ public class Tukki : MonoBehaviour
     // Muuttuja, joka tallentaa ter�n nimen
     private string teranNimi = "Tera";
 
+    public GameObject FloatingPoints;
+
     private void Update()
     {
         // Liikutetaan objektia taaksep�in nopeuden verran
@@ -49,6 +51,9 @@ public class Tukki : MonoBehaviour
         {
             // Tukki tuhoutuu
             Destroy(gameObject);
+
+            // Floating points txt spawn when game object is destroyed
+            Instantiate(FloatingPoints, new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
 
             // Lasketaan pisteet pelilogiikan perusteella
             int value = 15;

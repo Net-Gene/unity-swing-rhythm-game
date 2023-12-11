@@ -54,6 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a5187e7abc1740c78bdfa63c36824d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FloatingPoints: {fileID: 4801699483551402068, guid: b724487fdef478f448d02738cb9804b3, type: 3}
 --- !u!23 &3504929937827879362
 MeshRenderer:
   m_ObjectHideFlags: 0

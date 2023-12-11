@@ -20,6 +20,8 @@ public class Majava : MonoBehaviour
     // Muuttuja, joka tallentaa ter�n nimen
     private string teranNimi = "Tera";
 
+    public GameObject FloatingPoints;
+
 
     private void Update()
     {
@@ -49,6 +51,9 @@ public class Majava : MonoBehaviour
         {
             // Kala tuhoutuu
             Destroy(gameObject);
+
+            // Floating points txt spawn when game object is destroyed
+            Instantiate(FloatingPoints, new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
 
             // Lis�tt�v�t pisteet
             int value = 30;

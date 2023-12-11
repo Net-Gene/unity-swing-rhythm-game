@@ -142,26 +142,41 @@ public class Kirves : MonoBehaviour
     {
         AsetaKaista("B");
 
-        // Check if gyro is available
-        if (SystemInfo.supportsGyroscope)
+        if (Application.platform == RuntimePlatform.Android)
         {
-            Input.gyro.enabled = true; // Enable the gyro
-                                       // Store the initial orientation of the device
-            initialOrientation = Input.gyro.attitude;
-        }
-        else
-        {
-            Debug.LogError("Gyro is not supported on this device.");
+            // Check if gyro is available
+            if (SystemInfo.supportsGyroscope)
+            {
+                Input.gyro.enabled = true; // Enable the gyro
+                                           // Store the initial orientation of the device
+                initialOrientation = Input.gyro.attitude;
+            }
+            else
+            {
+                Debug.LogError("Gyro is not supported on this device.");
+            }
         }
     }
 
     // Käynnistää lyöntianimaation välilyönnillä (Space) tai kun puhelin on palautettu alkuperäiseen asentoon
     void LyoKirveella()
     {
-        // Check if the phone is in the original orientation
-        if (IsPhoneInOriginalOrientation() || (Input.GetKeyDown(KeyCode.Space)))
+        
+        if (Application.platform == RuntimePlatform.Android)
         {
-            StartCoroutine(LyoAnimaatio());
+            // Check if the phone is in the original orientation
+            if (IsPhoneInOriginalOrientation())
+            {
+                StartCoroutine(LyoAnimaatio());
+            }
+        }
+        else
+        {
+            // Check if the phone is in the original orientation
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                StartCoroutine(LyoAnimaatio());
+            }
         }
     }
 
@@ -179,7 +194,7 @@ public class Kirves : MonoBehaviour
         float angleDifference = Mathf.Abs(Mathf.DeltaAngle(currentZAngle, initialZAngle));
 
         // Adjust the threshold based on your preference for how much Z angle change is required
-        float zAngleThreshold = 5f;
+        float zAngleThreshold = 10f;
 
         return angleDifference < zAngleThreshold;
     }
